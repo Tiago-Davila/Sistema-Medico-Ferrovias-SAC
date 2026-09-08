@@ -45,11 +45,10 @@ Secciones reemplazadas:
 
 TODOs diferidos: ninguno dentro de este documento.
 
-CONFLICTO CONOCIDO, REQUIERE ACCIÓN MANUAL: el archivo CLAUDE.md en la raíz del
-repositorio describe la arquitectura derogada por esta versión (dos bases,
-prohibición de DDL, paquete legacy/, tablas fv_*, vocabulario "novedad", bloque
-ART en pantalla). Contradice esta constitución en casi todos sus puntos y debe
-reescribirse. Fuera del alcance de este comando.
+CONFLICTO RESUELTO (2026-09-08): el archivo CLAUDE.md en la raíz del repositorio
+describía la arquitectura derogada por esta versión (dos bases, prohibición de
+DDL, paquete legacy/, tablas fv_*, vocabulario "novedad", bloque ART en
+pantalla). Fue reescrito para alinearse con esta constitución.
 -->
 
 # Constitución del Sistema de Fichas Médicas de Ferrovías SAC
