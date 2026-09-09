@@ -2,7 +2,27 @@ spring:
   application:
     name: sistema-medico
 
+  # Sin valores por defecto: la aplicación no arranca sin conexión configurada,
+  # en lugar de caer en silencio sobre una base equivocada. Nunca van
+  # credenciales en este archivo.
+  datasource:
+    url: ${SISMEDICO_DB_URL}
+    username: ${SISMEDICO_DB_USUARIO}
+    password: ${SISMEDICO_DB_CLAVE}
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
 app:
   # D7, FR-018b. Toda regla que depende de "hoy" se evalúa en esta zona,
   # no en la del servidor ni en la del navegador del operario.
   zona-horaria: America/Argentina/Buenos_Aires
+
+logging:
+  level:
+    # M3. El log de parámetros de SQL es la vía de fuga de datos clínicos más
+    # fácil de pasar por alto: en DEBUG, JdbcTemplate imprime las observaciones
+    # y los códigos de enfermedad de cada consulta. ComprobacionNivelDeLogs
+    # (T023) falla el arranque si alguien lo baja fuera del perfil de test.
+    org.springframework.jdbc.core.JdbcTemplate: INFO
