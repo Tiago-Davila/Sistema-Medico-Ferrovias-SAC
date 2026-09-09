@@ -50,17 +50,28 @@ export function SelectorCatalogo({
   }, []);
 
   useEffect(() => {
-    if (!grupoElegido) {
-      setDetalles([]);
-      return;
-    }
+    if (!grupoElegido) return;
+    // `vigente` evita que una respuesta lenta de un grupo anterior pise a la
+    // del grupo que el operario acaba de tipear.
+    let vigente = true;
     void traerDetalles(grupoElegido)
-      .then(setDetalles)
-      .catch(() => setDetalles([]));
+      .then((d) => {
+        if (vigente) setDetalles(d);
+      })
+      .catch(() => {
+        if (vigente) setDetalles([]);
+      });
+    return () => {
+      vigente = false;
+    };
   }, [grupoElegido]);
 
+  // Derivado en lugar de vaciado desde el efecto: sin grupo no hay detalles que
+  // ofrecer, y limpiarlos con setState dentro del efecto encadena renders.
+  const detallesVisibles = grupoElegido ? detalles : [];
+
   const descripcionGrupo = grupos.find((g) => g.id === grupoElegido)?.descripcion;
-  const descripcionDetalle = detalles.find((d) => d.id === detalleElegido)?.descripcion;
+  const descripcionDetalle = detallesVisibles.find((d) => d.id === detalleElegido)?.descripcion;
 
   const claseCampo = "w-32 border border-neutral-400 px-2 py-1 font-mono";
 
@@ -123,7 +134,7 @@ export function SelectorCatalogo({
             })}
           />
           <datalist id="lista-detalles">
-            {detalles.map((detalle) => (
+            {detallesVisibles.map((detalle) => (
               <option key={detalle.id} value={detalle.id}>
                 {detalle.descripcion}
               </option>
