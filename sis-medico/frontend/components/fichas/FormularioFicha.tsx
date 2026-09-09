@@ -103,17 +103,14 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
     return violaciones.find((v) => v.campo === campo);
   }
 
-  /** Muestra el rechazo del backend, y si no hay, el del formulario. */
-  function Error_({ campo }: { campo: keyof FormularioFicha }) {
-    const delServidor = violacionDe(campo)?.mensaje;
-    const delFormulario = formState.errors[campo]?.message;
-    const mensaje = delServidor ?? delFormulario;
-    if (!mensaje) return null;
-    return (
-      <p role="alert" className="text-sm text-red-700">
-        {mensaje}
-      </p>
-    );
+  /**
+   * El mensaje a mostrar junto a un control.
+   *
+   * Gana el del servidor: es el que decide si la ficha se guarda (FR-018). El
+   * del formulario solo aparece cuando el envío ni siquiera llegó a salir.
+   */
+  function mensajeDe(campo: keyof FormularioFicha): string | undefined {
+    return violacionDe(campo)?.mensaje ?? (formState.errors[campo]?.message as string | undefined);
   }
 
   const claseCampo = "border border-neutral-400 px-2 py-1";
@@ -132,7 +129,7 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
           className={claseCampo}
           {...register("fechaEvento")}
         />
-        <Error_ campo="fechaEvento" />
+        <ErrorDeCampo mensaje={mensajeDe("fechaEvento")} />
       </div>
 
       <div className="flex flex-col gap-1">
@@ -149,7 +146,7 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
           <option value="ACCIDENTADO">Accidentado</option>
           <option value="ENFERMEDAD">Enfermedad</option>
         </select>
-        <Error_ campo="estadoPaciente" />
+        <ErrorDeCampo mensaje={mensajeDe("estadoPaciente")} />
       </div>
 
       <div className="flex flex-col gap-1">
@@ -170,7 +167,7 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
           <option value="true">Sí</option>
           <option value="false">No</option>
         </select>
-        <Error_ campo="inItinere" />
+        <ErrorDeCampo mensaje={mensajeDe("inItinere")} />
       </div>
 
       <div className="flex flex-col gap-1">
@@ -190,7 +187,7 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
             setValueAs: (v) => (v === "" || v === null ? null : Number(v)),
           })}
         />
-        <Error_ campo="horaAccidente" />
+        <ErrorDeCampo mensaje={mensajeDe("horaAccidente")} />
       </div>
 
       {/* ------------------------------------------------- Sí o no */}
@@ -238,7 +235,7 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
           className={claseCampo}
           {...register("fechaCitacion", { setValueAs: (v) => (v === "" ? null : v) })}
         />
-        <Error_ campo="fechaCitacion" />
+        <ErrorDeCampo mensaje={mensajeDe("fechaCitacion")} />
       </div>
 
       <div className="flex flex-col gap-1">
@@ -252,7 +249,7 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
           className={claseCampo}
           {...register("fechaAlta", { setValueAs: (v) => (v === "" ? null : v) })}
         />
-        <Error_ campo="fechaAlta" />
+        <ErrorDeCampo mensaje={mensajeDe("fechaAlta")} />
       </div>
 
       <div className="flex flex-col gap-1">
@@ -294,9 +291,26 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
         >
           {largoObservaciones} / {MAXIMO_OBSERVACIONES}
         </span>
-        <Error_ campo="observaciones" />
+        <ErrorDeCampo mensaje={mensajeDe("observaciones")} />
       </div>
     </fieldset>
+  );
+}
+
+/**
+ * El renglón de error de un control.
+ *
+ * Definido a nivel de módulo y no dentro de FormularioFicha: un componente
+ * creado durante el render es un tipo nuevo en cada pasada, y React desmonta y
+ * vuelve a montar el subárbol. En un formulario eso se ve como el foco
+ * perdiéndose mientras el operario escribe.
+ */
+function ErrorDeCampo({ mensaje }: { mensaje?: string }) {
+  if (!mensaje) return null;
+  return (
+    <p role="alert" className="text-sm text-red-700">
+      {mensaje}
+    </p>
   );
 }
 
