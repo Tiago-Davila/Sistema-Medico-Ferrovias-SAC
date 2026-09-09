@@ -1,10 +1,10 @@
-package com.sis_medico.demo;
+package com.ferrovias.sismedico;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class SistemaMedicoApplicationTests {
 
 	@Test
 	void contextLoads() {
