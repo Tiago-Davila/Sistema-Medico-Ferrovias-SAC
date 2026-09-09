@@ -19,6 +19,16 @@ app:
   # no en la del servidor ni en la del navegador del operario.
   zona-horaria: America/Argentina/Buenos_Aires
 
+  padron:
+    # FR-003b: el padrón vive en otra base y se consulta donde está. Nunca se
+    # copia ni se sincroniza a este esquema.
+    #
+    # Nombre de dos partes (base.esquema) para consultarlo desde el mismo
+    # DataSource. Asume que está en la MISMA instancia de SQL Server, que es el
+    # supuesto que T002 tenía que verificar y quedó sin verificar. Si estuviera
+    # en otra instancia hace falta un DataSource aparte.
+    esquema: ${SISMEDICO_PADRON_ESQUEMA:padron.dbo}
+
   # FR-034: Active Directory corporativo. No van acá: se inyectan en el
   # despliegue, igual que la conexión a la base.
   #
