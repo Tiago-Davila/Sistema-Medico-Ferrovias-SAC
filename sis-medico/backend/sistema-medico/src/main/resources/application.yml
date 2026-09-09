@@ -19,6 +19,16 @@ app:
   # no en la del servidor ni en la del navegador del operario.
   zona-horaria: America/Argentina/Buenos_Aires
 
+  # FR-034: Active Directory corporativo. No van acá: se inyectan en el
+  # despliegue, igual que la conexión a la base.
+  #
+  #   app.directorio.url      ldaps://ad.ferrovias.local:636
+  #   app.directorio.dominio  ferrovias.local
+  #
+  # Si la URL falta, no hay ningún proveedor de autenticación y nadie entra. Es
+  # el modo de falla correcto: no hay usuarios de reserva sobre datos de salud.
+  # La URL tiene que ser ldaps://; con ldap:// la contraseña viaja en claro.
+
 logging:
   level:
     # M3. El log de parámetros de SQL es la vía de fuga de datos clínicos más
