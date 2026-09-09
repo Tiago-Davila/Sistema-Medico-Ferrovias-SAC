@@ -5,6 +5,14 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Volcados crudos del sistema de referencia ###
+# Traen legajos reales, diagnósticos reales y números de siniestro de la ART.
+# NUNCA entran al repositorio: el historial de git es para siempre y esto son
+# datos de salud de empleados identificables (Principio VI, FR-036c).
+# Al repo entra solo el derivado anonimizado de src/test/resources/datos/,
+# producido por datos/anonimizar-historico.py.
+assets/
+
 ### STS ###
 .apt_generated
 .classpath

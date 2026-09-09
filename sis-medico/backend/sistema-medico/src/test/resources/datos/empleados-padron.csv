@@ -1,0 +1,433 @@
+legajo;apellido;nombre;seccion;categoria_laboral
+900001;Sosa;Ramón;Vía y Obras;Oficial
+900002;Quiroga;Alicia;Tráfico;Medio Oficial
+900003;Ledesma;Carlos;Material Rodante;Ayudante
+900004;Barrios;Elsa;Señalamiento;Capataz
+900005;Ocampo;Daniel;Estaciones;Administrativo
+900006;Vera;Susana;Administración;Oficial
+900007;Maidana;Hugo;Vía y Obras;Medio Oficial
+900008;Cabrera;Estela;Tráfico;Ayudante
+900009;Villalba;Néstor;Material Rodante;Capataz
+900010;Aguirre;Norma;Señalamiento;Administrativo
+900011;Peralta;Jorge;Estaciones;Oficial
+900012;Zalazar;Graciela;Administración;Medio Oficial
+900013;Ibarra;Osvaldo;Vía y Obras;Ayudante
+900014;Correa;Silvia;Tráfico;Capataz
+900015;Miranda;Alberto;Material Rodante;Administrativo
+900016;Escobar;Mirta;Señalamiento;Oficial
+900017;Bustos;Raúl;Estaciones;Medio Oficial
+900018;Rolón;Nélida;Administración;Ayudante
+900019;Alvarenga;Rubén;Vía y Obras;Capataz
+900020;Gauna;Beatriz;Tráfico;Administrativo
+900021;Sosa;Ramón;Material Rodante;Oficial
+900022;Quiroga;Alicia;Señalamiento;Medio Oficial
+900023;Ledesma;Carlos;Estaciones;Ayudante
+900024;Barrios;Elsa;Administración;Capataz
+900025;Ocampo;Daniel;Vía y Obras;Administrativo
+900026;Vera;Susana;Tráfico;Oficial
+900027;Maidana;Hugo;Material Rodante;Medio Oficial
+900028;Cabrera;Estela;Señalamiento;Ayudante
+900029;Villalba;Néstor;Estaciones;Capataz
+900030;Aguirre;Norma;Administración;Administrativo
+900031;Peralta;Jorge;Vía y Obras;Oficial
+900032;Zalazar;Graciela;Tráfico;Medio Oficial
+900033;Ibarra;Osvaldo;Material Rodante;Ayudante
+900034;Correa;Silvia;Señalamiento;Capataz
+900035;Miranda;Alberto;Estaciones;Administrativo
+900036;Escobar;Mirta;Administración;Oficial
+900037;Bustos;Raúl;Vía y Obras;Medio Oficial
+900038;Rolón;Nélida;Tráfico;Ayudante
+900039;Alvarenga;Rubén;Material Rodante;Capataz
+900040;Gauna;Beatriz;Señalamiento;Administrativo
+900041;Sosa;Ramón;Estaciones;Oficial
+900042;Quiroga;Alicia;Administración;Medio Oficial
+900043;Ledesma;Carlos;Vía y Obras;Ayudante
+900044;Barrios;Elsa;Tráfico;Capataz
+900045;Ocampo;Daniel;Material Rodante;Administrativo
+900046;Vera;Susana;Señalamiento;Oficial
+900047;Maidana;Hugo;Estaciones;Medio Oficial
+900048;Cabrera;Estela;Administración;Ayudante
+900049;Villalba;Néstor;Vía y Obras;Capataz
+900050;Aguirre;Norma;Tráfico;Administrativo
+900051;Peralta;Jorge;Material Rodante;Oficial
+900052;Zalazar;Graciela;Señalamiento;Medio Oficial
+900053;Ibarra;Osvaldo;Estaciones;Ayudante
+900054;Correa;Silvia;Administración;Capataz
+900055;Miranda;Alberto;Vía y Obras;Administrativo
+900056;Escobar;Mirta;Tráfico;Oficial
+900057;Bustos;Raúl;Material Rodante;Medio Oficial
+900058;Rolón;Nélida;Señalamiento;Ayudante
+900059;Alvarenga;Rubén;Estaciones;Capataz
+900060;Gauna;Beatriz;Administración;Administrativo
+900061;Sosa;Ramón;Vía y Obras;Oficial
+900062;Quiroga;Alicia;Tráfico;Medio Oficial
+900063;Ledesma;Carlos;Material Rodante;Ayudante
+900064;Barrios;Elsa;Señalamiento;Capataz
+900065;Ocampo;Daniel;Estaciones;Administrativo
+900066;Vera;Susana;Administración;Oficial
+900067;Maidana;Hugo;Vía y Obras;Medio Oficial
+900068;Cabrera;Estela;Tráfico;Ayudante
+900069;Villalba;Néstor;Material Rodante;Capataz
+900070;Aguirre;Norma;Señalamiento;Administrativo
+900071;Peralta;Jorge;Estaciones;Oficial
+900072;Zalazar;Graciela;Administración;Medio Oficial
+900073;Ibarra;Osvaldo;Vía y Obras;Ayudante
+900074;Correa;Silvia;Tráfico;Capataz
+900075;Miranda;Alberto;Material Rodante;Administrativo
+900076;Escobar;Mirta;Señalamiento;Oficial
+900077;Bustos;Raúl;Estaciones;Medio Oficial
+900078;Rolón;Nélida;Administración;Ayudante
+900079;Alvarenga;Rubén;Vía y Obras;Capataz
+900080;Gauna;Beatriz;Tráfico;Administrativo
+900081;Sosa;Ramón;Material Rodante;Oficial
+900082;Quiroga;Alicia;Señalamiento;Medio Oficial
+900083;Ledesma;Carlos;Estaciones;Ayudante
+900084;Barrios;Elsa;Administración;Capataz
+900085;Ocampo;Daniel;Vía y Obras;Administrativo
+900086;Vera;Susana;Tráfico;Oficial
+900087;Maidana;Hugo;Material Rodante;Medio Oficial
+900088;Cabrera;Estela;Señalamiento;Ayudante
+900089;Villalba;Néstor;Estaciones;Capataz
+900090;Aguirre;Norma;Administración;Administrativo
+900091;Peralta;Jorge;Vía y Obras;Oficial
+900092;Zalazar;Graciela;Tráfico;Medio Oficial
+900093;Ibarra;Osvaldo;Material Rodante;Ayudante
+900094;Correa;Silvia;Señalamiento;Capataz
+900095;Miranda;Alberto;Estaciones;Administrativo
+900096;Escobar;Mirta;Administración;Oficial
+900097;Bustos;Raúl;Vía y Obras;Medio Oficial
+900098;Rolón;Nélida;Tráfico;Ayudante
+900099;Alvarenga;Rubén;Material Rodante;Capataz
+900100;Gauna;Beatriz;Señalamiento;Administrativo
+900101;Sosa;Ramón;Estaciones;Oficial
+900102;Quiroga;Alicia;Administración;Medio Oficial
+900103;Ledesma;Carlos;Vía y Obras;Ayudante
+900104;Barrios;Elsa;Tráfico;Capataz
+900105;Ocampo;Daniel;Material Rodante;Administrativo
+900106;Vera;Susana;Señalamiento;Oficial
+900107;Maidana;Hugo;Estaciones;Medio Oficial
+900108;Cabrera;Estela;Administración;Ayudante
+900109;Villalba;Néstor;Vía y Obras;Capataz
+900110;Aguirre;Norma;Tráfico;Administrativo
+900111;Peralta;Jorge;Material Rodante;Oficial
+900112;Zalazar;Graciela;Señalamiento;Medio Oficial
+900113;Ibarra;Osvaldo;Estaciones;Ayudante
+900114;Correa;Silvia;Administración;Capataz
+900115;Miranda;Alberto;Vía y Obras;Administrativo
+900116;Escobar;Mirta;Tráfico;Oficial
+900117;Bustos;Raúl;Material Rodante;Medio Oficial
+900118;Rolón;Nélida;Señalamiento;Ayudante
+900119;Alvarenga;Rubén;Estaciones;Capataz
+900120;Gauna;Beatriz;Administración;Administrativo
+900121;Sosa;Ramón;Vía y Obras;Oficial
+900122;Quiroga;Alicia;Tráfico;Medio Oficial
+900123;Ledesma;Carlos;Material Rodante;Ayudante
+900124;Barrios;Elsa;Señalamiento;Capataz
+900125;Ocampo;Daniel;Estaciones;Administrativo
+900126;Vera;Susana;Administración;Oficial
+900127;Maidana;Hugo;Vía y Obras;Medio Oficial
+900128;Cabrera;Estela;Tráfico;Ayudante
+900129;Villalba;Néstor;Material Rodante;Capataz
+900130;Aguirre;Norma;Señalamiento;Administrativo
+900131;Peralta;Jorge;Estaciones;Oficial
+900132;Zalazar;Graciela;Administración;Medio Oficial
+900133;Ibarra;Osvaldo;Vía y Obras;Ayudante
+900134;Correa;Silvia;Tráfico;Capataz
+900135;Miranda;Alberto;Material Rodante;Administrativo
+900136;Escobar;Mirta;Señalamiento;Oficial
+900137;Bustos;Raúl;Estaciones;Medio Oficial
+900138;Rolón;Nélida;Administración;Ayudante
+900139;Alvarenga;Rubén;Vía y Obras;Capataz
+900140;Gauna;Beatriz;Tráfico;Administrativo
+900141;Sosa;Ramón;Material Rodante;Oficial
+900142;Quiroga;Alicia;Señalamiento;Medio Oficial
+900143;Ledesma;Carlos;Estaciones;Ayudante
+900144;Barrios;Elsa;Administración;Capataz
+900145;Ocampo;Daniel;Vía y Obras;Administrativo
+900146;Vera;Susana;Tráfico;Oficial
+900147;Maidana;Hugo;Material Rodante;Medio Oficial
+900148;Cabrera;Estela;Señalamiento;Ayudante
+900149;Villalba;Néstor;Estaciones;Capataz
+900150;Aguirre;Norma;Administración;Administrativo
+900151;Peralta;Jorge;Vía y Obras;Oficial
+900152;Zalazar;Graciela;Tráfico;Medio Oficial
+900153;Ibarra;Osvaldo;Material Rodante;Ayudante
+900154;Correa;Silvia;Señalamiento;Capataz
+900155;Miranda;Alberto;Estaciones;Administrativo
+900156;Escobar;Mirta;Administración;Oficial
+900157;Bustos;Raúl;Vía y Obras;Medio Oficial
+900158;Rolón;Nélida;Tráfico;Ayudante
+900159;Alvarenga;Rubén;Material Rodante;Capataz
+900160;Gauna;Beatriz;Señalamiento;Administrativo
+900161;Sosa;Ramón;Estaciones;Oficial
+900162;Quiroga;Alicia;Administración;Medio Oficial
+900163;Ledesma;Carlos;Vía y Obras;Ayudante
+900164;Barrios;Elsa;Tráfico;Capataz
+900165;Ocampo;Daniel;Material Rodante;Administrativo
+900166;Vera;Susana;Señalamiento;Oficial
+900167;Maidana;Hugo;Estaciones;Medio Oficial
+900168;Cabrera;Estela;Administración;Ayudante
+900169;Villalba;Néstor;Vía y Obras;Capataz
+900170;Aguirre;Norma;Tráfico;Administrativo
+900171;Peralta;Jorge;Material Rodante;Oficial
+900172;Zalazar;Graciela;Señalamiento;Medio Oficial
+900173;Ibarra;Osvaldo;Estaciones;Ayudante
+900174;Correa;Silvia;Administración;Capataz
+900175;Miranda;Alberto;Vía y Obras;Administrativo
+900176;Escobar;Mirta;Tráfico;Oficial
+900177;Bustos;Raúl;Material Rodante;Medio Oficial
+900178;Rolón;Nélida;Señalamiento;Ayudante
+900179;Alvarenga;Rubén;Estaciones;Capataz
+900180;Gauna;Beatriz;Administración;Administrativo
+900181;Sosa;Ramón;Vía y Obras;Oficial
+900182;Quiroga;Alicia;Tráfico;Medio Oficial
+900183;Ledesma;Carlos;Material Rodante;Ayudante
+900184;Barrios;Elsa;Señalamiento;Capataz
+900185;Ocampo;Daniel;Estaciones;Administrativo
+900186;Vera;Susana;Administración;Oficial
+900187;Maidana;Hugo;Vía y Obras;Medio Oficial
+900188;Cabrera;Estela;Tráfico;Ayudante
+900189;Villalba;Néstor;Material Rodante;Capataz
+900190;Aguirre;Norma;Señalamiento;Administrativo
+900191;Peralta;Jorge;Estaciones;Oficial
+900192;Zalazar;Graciela;Administración;Medio Oficial
+900193;Ibarra;Osvaldo;Vía y Obras;Ayudante
+900194;Correa;Silvia;Tráfico;Capataz
+900195;Miranda;Alberto;Material Rodante;Administrativo
+900196;Escobar;Mirta;Señalamiento;Oficial
+900197;Bustos;Raúl;Estaciones;Medio Oficial
+900198;Rolón;Nélida;Administración;Ayudante
+900199;Alvarenga;Rubén;Vía y Obras;Capataz
+900200;Gauna;Beatriz;Tráfico;Administrativo
+900201;Sosa;Ramón;Material Rodante;Oficial
+900202;Quiroga;Alicia;Señalamiento;Medio Oficial
+900203;Ledesma;Carlos;Estaciones;Ayudante
+900204;Barrios;Elsa;Administración;Capataz
+900205;Ocampo;Daniel;Vía y Obras;Administrativo
+900206;Vera;Susana;Tráfico;Oficial
+900207;Maidana;Hugo;Material Rodante;Medio Oficial
+900208;Cabrera;Estela;Señalamiento;Ayudante
+900209;Villalba;Néstor;Estaciones;Capataz
+900210;Aguirre;Norma;Administración;Administrativo
+900211;Peralta;Jorge;Vía y Obras;Oficial
+900212;Zalazar;Graciela;Tráfico;Medio Oficial
+900213;Ibarra;Osvaldo;Material Rodante;Ayudante
+900214;Correa;Silvia;Señalamiento;Capataz
+900215;Miranda;Alberto;Estaciones;Administrativo
+900216;Escobar;Mirta;Administración;Oficial
+900217;Bustos;Raúl;Vía y Obras;Medio Oficial
+900218;Rolón;Nélida;Tráfico;Ayudante
+900219;Alvarenga;Rubén;Material Rodante;Capataz
+900220;Gauna;Beatriz;Señalamiento;Administrativo
+900221;Sosa;Ramón;Estaciones;Oficial
+900222;Quiroga;Alicia;Administración;Medio Oficial
+900223;Ledesma;Carlos;Vía y Obras;Ayudante
+900224;Barrios;Elsa;Tráfico;Capataz
+900225;Ocampo;Daniel;Material Rodante;Administrativo
+900226;Vera;Susana;Señalamiento;Oficial
+900227;Maidana;Hugo;Estaciones;Medio Oficial
+900228;Cabrera;Estela;Administración;Ayudante
+900229;Villalba;Néstor;Vía y Obras;Capataz
+900230;Aguirre;Norma;Tráfico;Administrativo
+900231;Peralta;Jorge;Material Rodante;Oficial
+900232;Zalazar;Graciela;Señalamiento;Medio Oficial
+900233;Ibarra;Osvaldo;Estaciones;Ayudante
+900234;Correa;Silvia;Administración;Capataz
+900235;Miranda;Alberto;Vía y Obras;Administrativo
+900236;Escobar;Mirta;Tráfico;Oficial
+900237;Bustos;Raúl;Material Rodante;Medio Oficial
+900238;Rolón;Nélida;Señalamiento;Ayudante
+900239;Alvarenga;Rubén;Estaciones;Capataz
+900240;Gauna;Beatriz;Administración;Administrativo
+900241;Sosa;Ramón;Vía y Obras;Oficial
+900242;Quiroga;Alicia;Tráfico;Medio Oficial
+900243;Ledesma;Carlos;Material Rodante;Ayudante
+900244;Barrios;Elsa;Señalamiento;Capataz
+900245;Ocampo;Daniel;Estaciones;Administrativo
+900246;Vera;Susana;Administración;Oficial
+900247;Maidana;Hugo;Vía y Obras;Medio Oficial
+900248;Cabrera;Estela;Tráfico;Ayudante
+900249;Villalba;Néstor;Material Rodante;Capataz
+900250;Aguirre;Norma;Señalamiento;Administrativo
+900251;Peralta;Jorge;Estaciones;Oficial
+900252;Zalazar;Graciela;Administración;Medio Oficial
+900253;Ibarra;Osvaldo;Vía y Obras;Ayudante
+900254;Correa;Silvia;Tráfico;Capataz
+900255;Miranda;Alberto;Material Rodante;Administrativo
+900256;Escobar;Mirta;Señalamiento;Oficial
+900257;Bustos;Raúl;Estaciones;Medio Oficial
+900258;Rolón;Nélida;Administración;Ayudante
+900259;Alvarenga;Rubén;Vía y Obras;Capataz
+900260;Gauna;Beatriz;Tráfico;Administrativo
+900261;Sosa;Ramón;Material Rodante;Oficial
+900262;Quiroga;Alicia;Señalamiento;Medio Oficial
+900263;Ledesma;Carlos;Estaciones;Ayudante
+900264;Barrios;Elsa;Administración;Capataz
+900265;Ocampo;Daniel;Vía y Obras;Administrativo
+900266;Vera;Susana;Tráfico;Oficial
+900267;Maidana;Hugo;Material Rodante;Medio Oficial
+900268;Cabrera;Estela;Señalamiento;Ayudante
+900269;Villalba;Néstor;Estaciones;Capataz
+900270;Aguirre;Norma;Administración;Administrativo
+900271;Peralta;Jorge;Vía y Obras;Oficial
+900272;Zalazar;Graciela;Tráfico;Medio Oficial
+900273;Ibarra;Osvaldo;Material Rodante;Ayudante
+900274;Correa;Silvia;Señalamiento;Capataz
+900275;Miranda;Alberto;Estaciones;Administrativo
+900276;Escobar;Mirta;Administración;Oficial
+900277;Bustos;Raúl;Vía y Obras;Medio Oficial
+900278;Rolón;Nélida;Tráfico;Ayudante
+900279;Alvarenga;Rubén;Material Rodante;Capataz
+900280;Gauna;Beatriz;Señalamiento;Administrativo
+900281;Sosa;Ramón;Estaciones;Oficial
+900282;Quiroga;Alicia;Administración;Medio Oficial
+900283;Ledesma;Carlos;Vía y Obras;Ayudante
+900284;Barrios;Elsa;Tráfico;Capataz
+900285;Ocampo;Daniel;Material Rodante;Administrativo
+900286;Vera;Susana;Señalamiento;Oficial
+900287;Maidana;Hugo;Estaciones;Medio Oficial
+900288;Cabrera;Estela;Administración;Ayudante
+900289;Villalba;Néstor;Vía y Obras;Capataz
+900290;Aguirre;Norma;Tráfico;Administrativo
+900291;Peralta;Jorge;Material Rodante;Oficial
+900292;Zalazar;Graciela;Señalamiento;Medio Oficial
+900293;Ibarra;Osvaldo;Estaciones;Ayudante
+900294;Correa;Silvia;Administración;Capataz
+900295;Miranda;Alberto;Vía y Obras;Administrativo
+900296;Escobar;Mirta;Tráfico;Oficial
+900297;Bustos;Raúl;Material Rodante;Medio Oficial
+900298;Rolón;Nélida;Señalamiento;Ayudante
+900299;Alvarenga;Rubén;Estaciones;Capataz
+900300;Gauna;Beatriz;Administración;Administrativo
+900301;Sosa;Ramón;Vía y Obras;Oficial
+900302;Quiroga;Alicia;Tráfico;Medio Oficial
+900303;Ledesma;Carlos;Material Rodante;Ayudante
+900304;Barrios;Elsa;Señalamiento;Capataz
+900305;Ocampo;Daniel;Estaciones;Administrativo
+900306;Vera;Susana;Administración;Oficial
+900307;Maidana;Hugo;Vía y Obras;Medio Oficial
+900308;Cabrera;Estela;Tráfico;Ayudante
+900309;Villalba;Néstor;Material Rodante;Capataz
+900310;Aguirre;Norma;Señalamiento;Administrativo
+900311;Peralta;Jorge;Estaciones;Oficial
+900312;Zalazar;Graciela;Administración;Medio Oficial
+900313;Ibarra;Osvaldo;Vía y Obras;Ayudante
+900314;Correa;Silvia;Tráfico;Capataz
+900315;Miranda;Alberto;Material Rodante;Administrativo
+900316;Escobar;Mirta;Señalamiento;Oficial
+900317;Bustos;Raúl;Estaciones;Medio Oficial
+900318;Rolón;Nélida;Administración;Ayudante
+900319;Alvarenga;Rubén;Vía y Obras;Capataz
+900320;Gauna;Beatriz;Tráfico;Administrativo
+900321;Sosa;Ramón;Material Rodante;Oficial
+900322;Quiroga;Alicia;Señalamiento;Medio Oficial
+900323;Ledesma;Carlos;Estaciones;Ayudante
+900324;Barrios;Elsa;Administración;Capataz
+900325;Ocampo;Daniel;Vía y Obras;Administrativo
+900326;Vera;Susana;Tráfico;Oficial
+900327;Maidana;Hugo;Material Rodante;Medio Oficial
+900328;Cabrera;Estela;Señalamiento;Ayudante
+900329;Villalba;Néstor;Estaciones;Capataz
+900330;Aguirre;Norma;Administración;Administrativo
+900331;Peralta;Jorge;Vía y Obras;Oficial
+900332;Zalazar;Graciela;Tráfico;Medio Oficial
+900333;Ibarra;Osvaldo;Material Rodante;Ayudante
+900334;Correa;Silvia;Señalamiento;Capataz
+900335;Miranda;Alberto;Estaciones;Administrativo
+900336;Escobar;Mirta;Administración;Oficial
+900337;Bustos;Raúl;Vía y Obras;Medio Oficial
+900338;Rolón;Nélida;Tráfico;Ayudante
+900339;Alvarenga;Rubén;Material Rodante;Capataz
+900340;Gauna;Beatriz;Señalamiento;Administrativo
+900341;Sosa;Ramón;Estaciones;Oficial
+900342;Quiroga;Alicia;Administración;Medio Oficial
+900343;Ledesma;Carlos;Vía y Obras;Ayudante
+900344;Barrios;Elsa;Tráfico;Capataz
+900345;Ocampo;Daniel;Material Rodante;Administrativo
+900346;Vera;Susana;Señalamiento;Oficial
+900347;Maidana;Hugo;Estaciones;Medio Oficial
+900348;Cabrera;Estela;Administración;Ayudante
+900349;Villalba;Néstor;Vía y Obras;Capataz
+900350;Aguirre;Norma;Tráfico;Administrativo
+900351;Peralta;Jorge;Material Rodante;Oficial
+900352;Zalazar;Graciela;Señalamiento;Medio Oficial
+900353;Ibarra;Osvaldo;Estaciones;Ayudante
+900354;Correa;Silvia;Administración;Capataz
+900355;Miranda;Alberto;Vía y Obras;Administrativo
+900356;Escobar;Mirta;Tráfico;Oficial
+900357;Bustos;Raúl;Material Rodante;Medio Oficial
+900358;Rolón;Nélida;Señalamiento;Ayudante
+900359;Alvarenga;Rubén;Estaciones;Capataz
+900360;Gauna;Beatriz;Administración;Administrativo
+900361;Sosa;Ramón;Vía y Obras;Oficial
+900362;Quiroga;Alicia;Tráfico;Medio Oficial
+900363;Ledesma;Carlos;Material Rodante;Ayudante
+900364;Barrios;Elsa;Señalamiento;Capataz
+900365;Ocampo;Daniel;Estaciones;Administrativo
+900366;Vera;Susana;Administración;Oficial
+900367;Maidana;Hugo;Vía y Obras;Medio Oficial
+900368;Cabrera;Estela;Tráfico;Ayudante
+900369;Villalba;Néstor;Material Rodante;Capataz
+900370;Aguirre;Norma;Señalamiento;Administrativo
+900371;Peralta;Jorge;Estaciones;Oficial
+900372;Zalazar;Graciela;Administración;Medio Oficial
+900373;Ibarra;Osvaldo;Vía y Obras;Ayudante
+900374;Correa;Silvia;Tráfico;Capataz
+900375;Miranda;Alberto;Material Rodante;Administrativo
+900376;Escobar;Mirta;Señalamiento;Oficial
+900377;Bustos;Raúl;Estaciones;Medio Oficial
+900378;Rolón;Nélida;Administración;Ayudante
+900379;Alvarenga;Rubén;Vía y Obras;Capataz
+900380;Gauna;Beatriz;Tráfico;Administrativo
+900381;Sosa;Ramón;Material Rodante;Oficial
+900382;Quiroga;Alicia;Señalamiento;Medio Oficial
+900383;Ledesma;Carlos;Estaciones;Ayudante
+900384;Barrios;Elsa;Administración;Capataz
+900385;Ocampo;Daniel;Vía y Obras;Administrativo
+900386;Vera;Susana;Tráfico;Oficial
+900387;Maidana;Hugo;Material Rodante;Medio Oficial
+900388;Cabrera;Estela;Señalamiento;Ayudante
+900389;Villalba;Néstor;Estaciones;Capataz
+900390;Aguirre;Norma;Administración;Administrativo
+900391;Peralta;Jorge;Vía y Obras;Oficial
+900392;Zalazar;Graciela;Tráfico;Medio Oficial
+900393;Ibarra;Osvaldo;Material Rodante;Ayudante
+900394;Correa;Silvia;Señalamiento;Capataz
+900395;Miranda;Alberto;Estaciones;Administrativo
+900396;Escobar;Mirta;Administración;Oficial
+900397;Bustos;Raúl;Vía y Obras;Medio Oficial
+900398;Rolón;Nélida;Tráfico;Ayudante
+900399;Alvarenga;Rubén;Material Rodante;Capataz
+900400;Gauna;Beatriz;Señalamiento;Administrativo
+900401;Sosa;Ramón;Estaciones;Oficial
+900402;Quiroga;Alicia;Administración;Medio Oficial
+900403;Ledesma;Carlos;Vía y Obras;Ayudante
+900404;Barrios;Elsa;Tráfico;Capataz
+900405;Ocampo;Daniel;Material Rodante;Administrativo
+900406;Vera;Susana;Señalamiento;Oficial
+900407;Maidana;Hugo;Estaciones;Medio Oficial
+900408;Cabrera;Estela;Administración;Ayudante
+900409;Villalba;Néstor;Vía y Obras;Capataz
+900410;Aguirre;Norma;Tráfico;Administrativo
+900411;Peralta;Jorge;Material Rodante;Oficial
+900412;Zalazar;Graciela;Señalamiento;Medio Oficial
+900413;Ibarra;Osvaldo;Estaciones;Ayudante
+900414;Correa;Silvia;Administración;Capataz
+900415;Miranda;Alberto;Vía y Obras;Administrativo
+900416;Escobar;Mirta;Tráfico;Oficial
+900417;Bustos;Raúl;Material Rodante;Medio Oficial
+900418;Rolón;Nélida;Señalamiento;Ayudante
+900419;Alvarenga;Rubén;Estaciones;Capataz
+900420;Gauna;Beatriz;Administración;Administrativo
+900421;Sosa;Ramón;Vía y Obras;Oficial
+990001;Godoy;Marta;Vía y Obras;Oficial
+990002;Rios;Omar;Vía y Obras;Oficial
+990003;Nuñez;Lidia;Vía y Obras;Oficial
+990004;Farias;Tomas;Vía y Obras;Oficial
+990005;Cardozo;Nora;Vía y Obras;Oficial
+990006;Duarte;Julio;Vía y Obras;Oficial
+990007;Benitez;Ana;Vía y Obras;Oficial
+990008;Acosta;Pedro;Vía y Obras;Oficial
+990009;Romero;Rosa;Vía y Obras;Oficial
+990010;Paz;Luis;Vía y Obras;Oficial
+990011;Sanchez;Irma;Vía y Obras;Oficial

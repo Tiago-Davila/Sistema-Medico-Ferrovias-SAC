@@ -1,0 +1,17 @@
+caso;legajo;fecha_evento;fecha_citacion;fecha_alta;estado_paciente;in_itinere;estaba_en_servicio;hora_accidente;atendido_servicio_medico;envio_medico_domicilio;justificado;grupo_enfermedad_id;detalle_enfermedad_id;observaciones
+SIN_CLASIFICACION;990001;2014-03-11;NULL;2014-03-20;E;NULL;NULL;NULL;NULL;NULL;NULL;NULL;NULL;Anterior a la clasificacion de 2016
+SIN_CLASIFICACION_SOLO_GRUPO;990001;2015-07-02;NULL;2015-07-08;E;NULL;NULL;NULL;NULL;NULL;NULL;100;NULL;Grupo sin detalle
+CODIGO_HUERFANO;990002;2016-02-15;NULL;2016-02-20;E;NULL;NULL;NULL;NULL;NULL;NULL;88888;888888;Codigo que no esta en el catalogo
+SIN_FECHA_FIN;990003;2019-04-12;NULL;NULL;E;NULL;NULL;NULL;NULL;NULL;NULL;100;1001;Periodo abierto: bloquea el legajo por FR-014c
+SIN_FECHA_FIN_EVENTO_HOY;990004;HOY;NULL;NULL;E;NULL;NULL;NULL;NULL;NULL;NULL;100;1001;Periodo abierto de longitud cero: no bloquea
+DIAS_PERDIDOS_NEGATIVOS;990005;2020-01-10;NULL;2019-12-31;E;NULL;NULL;NULL;NULL;NULL;NULL;200;2001;Alta anterior al evento
+MAS_DE_999_DIAS;990006;2017-01-01;NULL;2020-01-01;E;NULL;NULL;NULL;NULL;NULL;NULL;1000;10001;1095 dias entre evento y alta
+OBSERVACIONES_EXCEDIDAS;990007;2015-05-05;NULL;2015-05-15;E;NULL;NULL;NULL;NULL;NULL;NULL;100;1002;Observacion historica de mas de 500 caracteres, cargada cuando no habia tope. Observacion historica de mas de 500 caracteres, cargada cuando no habia tope. Observacion historica de mas de 500 caracteres, cargada cuando no habia tope. Observacion historica de mas de 500 caracteres, cargada cuando no habia tope. Observacion historica de mas de 500 caracteres, cargada cuando no habia tope. Observacion historica de mas de 500 caracteres, cargada cuando no habia tope. Observacion historica de mas de 500 caracteres, cargada cuando no habia tope. Observacion historica de mas de 500 caracteres, cargada cuando no habia tope.
+LAS_DOS_FECHAS_DE_FIN;990008;2015-09-01;2015-09-10;2015-09-20;E;NULL;NULL;NULL;NULL;NULL;NULL;200;2002;Viola FR-008 al escribir, se lee igual
+CAMPO_SIN_RESPONDER;990009;2016-11-03;2016-11-10;NULL;A;NULL;NULL;NULL;NULL;NULL;NULL;1130;11301;Accidente sin in itinere ni los si/no
+EXTREMO_COMPARTIDO_A;990010;2018-06-01;NULL;2018-06-10;E;0;0;NULL;1;0;1;100;1003;Termina el 10
+EXTREMO_COMPARTIDO_B;990010;2018-06-10;NULL;2018-06-18;E;0;0;NULL;1;0;1;100;1004;Arranca el 10
+ORDEN_1_MAS_VIEJA;990011;2013-02-01;NULL;2013-02-05;E;0;0;NULL;1;0;1;200;2003;La mas vieja
+ORDEN_2_DEL_MEDIO;990011;2017-08-14;NULL;2017-08-20;E;0;0;NULL;1;0;1;300;3001;La del medio
+ORDEN_3_MAS_RECIENTE;990011;2021-12-30;NULL;2022-01-06;A;1;1;7;1;0;1;1130;11304;La mas reciente
+LEGAJO_FUERA_DEL_PADRON;990012;2016-04-04;NULL;2016-04-12;E;0;0;NULL;1;0;1;400;4001;El padron ya no lo tiene
