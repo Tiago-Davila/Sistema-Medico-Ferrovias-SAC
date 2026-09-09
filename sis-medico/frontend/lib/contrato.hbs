@@ -1,0 +1,24 @@
+{{!--
+  Plantilla de openapi-zod-client.
+
+  Emite SOLO los esquemas Zod. La plantilla que trae por defecto genera además
+  un cliente HTTP de zodios, que sería una dependencia de runtime para algo que
+  ya resuelve fetch.
+
+  Lo que sale de acá es la FORMA del contrato: nombres de campo, tipos y enums.
+  Las reglas de negocio NO están, y no pueden estar: son acumulativas, dependen
+  de las otras fichas del legajo y del reloj del servidor. Viven en el backend,
+  que es la autoridad (FR-018).
+--}}
+{{#if imports}}
+{{#each imports}}
+import { {{{@key}}} } from "./{{{this}}}"
+{{/each}}
+{{/if}}
+import { z } from "zod";
+
+{{#each schemas}}
+export const {{@key}} = {{{this}}};
+{{/each}}
+
+{{#if endpoints}}{{/if}}
