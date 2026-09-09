@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: sistema-medico
+
+app:
+  # D7, FR-018b. Toda regla que depende de "hoy" se evalúa en esta zona,
+  # no en la del servidor ni en la del navegador del operario.
+  zona-horaria: America/Argentina/Buenos_Aires
