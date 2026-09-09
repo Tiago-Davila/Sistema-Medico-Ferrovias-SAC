@@ -35,6 +35,35 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+// Dos velocidades, a propósito.
+//
+// `test` corre las reglas de negocio y los guardarraíles de arquitectura: no
+// toca Docker y tarda segundos. Es la que se usa mientras se escribe código.
+//
+// `integrationTest` corre lo que necesita base de datos. La imagen de SQL Server
+// pesa más de 2 GB, así que se la aparta para que el ciclo iterativo no la
+// pague. No cuelga de `check` por la misma razón: se invoca explícitamente,
+// en CI y antes de cerrar una tarea.
+def paqueteDeIntegracion = 'com.ferrovias.sismedico.integracion.*'
+
 tasks.named('test') {
 	useJUnitPlatform()
+	filter {
+		excludeTestsMatching paqueteDeIntegracion
+		setFailOnNoMatchingTests(false)
+	}
 }
+
+tasks.register('integrationTest', Test) {
+	group = 'verification'
+	description = 'Corre los tests que necesitan SQL Server sobre Testcontainers.'
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
+	useJUnitPlatform()
+	filter {
+		includeTestsMatching paqueteDeIntegracion
+		setFailOnNoMatchingTests(false)
+	}
+	shouldRunAfter tasks.named('test')
+}
+
