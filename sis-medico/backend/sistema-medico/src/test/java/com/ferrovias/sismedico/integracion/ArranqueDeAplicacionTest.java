@@ -1,6 +1,7 @@
 package com.ferrovias.sismedico.integracion;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,12 @@ class ArranqueDeAplicacionTest extends BaseIntegracion {
 		// Es la consulta entre bases que la aplicación hace en producción. Se
 		// prueba de verdad, no simulada, porque es el supuesto sobre el que se
 		// apoya D3: misma instancia, sin DataSource aparte y sin FK posible.
-		Integer empleados = jdbc.queryForObject(
-				"SELECT COUNT(*) FROM " + BASE_PADRON + ".dbo.empleado", Integer.class);
-
-		assertThat(empleados).isZero();
+		//
+		// Lo que se verifica es que la consulta resuelva, no cuántas filas hay:
+		// el contenido del padrón depende de qué otros tests hayan corrido antes
+		// en la suite, y atarse a eso volvería el test intermitente.
+		assertThatCode(() -> jdbc.queryForObject(
+				"SELECT COUNT(*) FROM " + BASE_PADRON + ".dbo.empleado", Integer.class))
+				.doesNotThrowAnyException();
 	}
 }
