@@ -1,0 +1,7 @@
+# IntelliJ. La configuración del IDE es de cada quien, no del proyecto.
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
