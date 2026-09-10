@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import com.ferrovias.sismedico.auditoria.AuditoriaRepositorio;
-import com.ferrovias.sismedico.auditoria.AuditoriaServicio;
-import com.ferrovias.sismedico.auditoria.Operacion;
-import com.ferrovias.sismedico.fichas.EstadoPaciente;
-import com.ferrovias.sismedico.fichas.FichaMedica;
-import com.ferrovias.sismedico.fichas.FichaMedicaRepositorio;
-import com.ferrovias.sismedico.fichas.Observaciones;
+import com.ferrovias.sismedico.repositories.AuditoriaRepositorio;
+import com.ferrovias.sismedico.service.AuditoriaServicio;
+import com.ferrovias.sismedico.models.Operacion;
+import com.ferrovias.sismedico.models.EstadoPaciente;
+import com.ferrovias.sismedico.models.FichaMedica;
+import com.ferrovias.sismedico.repositories.FichaMedicaRepositorio;
+import com.ferrovias.sismedico.models.Observaciones;
 
 /** FR-032, FR-033 y SC-004. */
 class AuditoriaTest extends BaseIntegracion {

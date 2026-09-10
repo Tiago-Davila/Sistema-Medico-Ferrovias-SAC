@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ferrovias.sismedico.empleados.PadronRepositorio;
+import com.ferrovias.sismedico.repositories.PadronRepositorio;
 
 /**
  * FR-001, FR-002 y FR-003b, contra la base externa de verdad.

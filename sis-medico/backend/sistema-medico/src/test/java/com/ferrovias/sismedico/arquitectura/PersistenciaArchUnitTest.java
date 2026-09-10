@@ -60,7 +60,8 @@ class PersistenciaArchUnitTest {
 
 	private final JavaClasses dominio = new ClassFileImporter()
 			.withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
-			.importPackages(PAQUETE + ".fichas", PAQUETE + ".empleados", PAQUETE + ".enfermedades");
+			.importPackages(PAQUETE + ".models", PAQUETE + ".controllers", PAQUETE + ".service",
+					PAQUETE + ".dtos", PAQUETE + ".repositories");
 
 	@Test
 	void el_dominio_no_lleva_anotaciones_de_validacion() {

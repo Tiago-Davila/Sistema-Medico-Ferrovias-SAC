@@ -1,0 +1,13 @@
+# Perfil de desarrollo local únicamente. No se activa solo: hace falta
+# `--spring.profiles.active=local` o `SPRING_PROFILES_ACTIVE=local`.
+#
+# `application.yml` deja adrede sin proveedor de reserva cuando falta AD
+# (SeguridadConfig, FR-034): "nadie entra" es el modo de falla correcto sobre
+# datos de salud. Este perfil no cambia esa regla para producción; solo evita
+# tener que leer una contraseña nueva del log en cada reinicio mientras se
+# desarrolla sin Active Directory a mano.
+spring:
+  security:
+    user:
+      name: operario
+      password: local-dev-only

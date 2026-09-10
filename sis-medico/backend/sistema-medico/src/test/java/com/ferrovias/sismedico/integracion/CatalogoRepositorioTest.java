@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ferrovias.sismedico.enfermedades.CatalogoRepositorio;
+import com.ferrovias.sismedico.repositories.CatalogoRepositorio;
 
 /** El catálogo que dejó la semilla de V2, consultado como lo consulta FR-010. */
 class CatalogoRepositorioTest extends BaseIntegracion {

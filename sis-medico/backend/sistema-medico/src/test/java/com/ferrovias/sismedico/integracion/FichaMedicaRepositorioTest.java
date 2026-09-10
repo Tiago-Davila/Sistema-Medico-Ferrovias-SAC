@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ferrovias.sismedico.fichas.EstadoPaciente;
-import com.ferrovias.sismedico.fichas.FichaMedica;
-import com.ferrovias.sismedico.fichas.FichaMedicaRepositorio;
-import com.ferrovias.sismedico.fichas.Observaciones;
+import com.ferrovias.sismedico.models.EstadoPaciente;
+import com.ferrovias.sismedico.models.FichaMedica;
+import com.ferrovias.sismedico.repositories.FichaMedicaRepositorio;
+import com.ferrovias.sismedico.models.Observaciones;
 
 /** Inserción y lectura, con la tolerancia que FR-028 y FR-030 exigen. */
 class FichaMedicaRepositorioTest extends BaseIntegracion {

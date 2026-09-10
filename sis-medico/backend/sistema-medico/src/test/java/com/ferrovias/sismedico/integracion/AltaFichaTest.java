@@ -19,8 +19,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import com.ferrovias.sismedico.auditoria.AuditoriaRepositorio;
-import com.ferrovias.sismedico.auditoria.Operacion;
+import com.ferrovias.sismedico.repositories.AuditoriaRepositorio;
+import com.ferrovias.sismedico.models.Operacion;
 
 /**
  * El alta de punta a punta: US1-3, US1-13, US1-14, US1-15 y US1-16.

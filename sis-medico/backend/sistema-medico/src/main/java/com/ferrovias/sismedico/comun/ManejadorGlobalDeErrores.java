@@ -9,22 +9,14 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.ferrovias.sismedico.empleados.PadronNoDisponibleException;
-import com.ferrovias.sismedico.fichas.ConflictoDeVersionException;
-import com.ferrovias.sismedico.fichas.FichaInvalidaException;
+import com.ferrovias.sismedico.dtos.Violacion;
+import com.ferrovias.sismedico.exceptions.ConflictoDeVersionException;
+import com.ferrovias.sismedico.exceptions.FichaInvalidaException;
+import com.ferrovias.sismedico.exceptions.PadronNoDisponibleException;
+import com.ferrovias.sismedico.exceptions.RecursoInexistenteException;
 
-/**
- * Traduce las excepciones de negocio al formato de error del contrato:
- * {@code application/problem+json} (RFC 9457).
- *
- * <p>Está acá y no en los controladores para que la forma del error sea una
- * sola. El frontend mira un único lugar, igual que con las advertencias.
- *
- * <p><b>Ninguno de estos métodos escribe el contenido de la ficha en el log.</b>
- * Un manejador de errores es el lugar donde más natural parece volcar "el objeto
- * que falló", y es justo donde eso filtraría observaciones y diagnósticos a un
- * archivo de texto (FR-035, M3). Se registran códigos y cantidades, nada más.
- */
+// Traduce las excepciones de negocio al formato de error del contrato: application/problem+json.
+// Intencional: ningún método escribe el contenido de la ficha en el log, solo códigos y cantidades.
 @RestControllerAdvice
 public class ManejadorGlobalDeErrores {
 
@@ -32,16 +24,9 @@ public class ManejadorGlobalDeErrores {
 
 	private static final String BASE_TIPOS = "https://ferrovias/errores/";
 
-	/**
-	 * 422 con <b>todas</b> las violaciones, cada una con su campo (M1).
-	 *
-	 * <p>No es 400: el cuerpo estaba bien formado y se entendió. Lo que falla
-	 * son reglas de negocio.
-	 */
+	// 422 con todas las violaciones de la ficha, cada una con su campo.
 	@ExceptionHandler(FichaInvalidaException.class)
 	ProblemDetail fichaInvalida(FichaInvalidaException e) {
-		// Solo los códigos. Los mensajes también son seguros, pero el log no
-		// necesita el detalle y cuanto menos viaje, mejor.
 		LOG.info("Ficha rechazada por {} violaciones: {}",
 				e.violaciones().size(), e.violaciones().stream().map(Violacion::codigo).toList());
 
@@ -52,7 +37,7 @@ public class ManejadorGlobalDeErrores {
 		return problema;
 	}
 
-	/** 409: la ficha cambió desde que se abrió (FR-037, D2). */
+	// 409: la ficha cambió desde que se abrió.
 	@ExceptionHandler(ConflictoDeVersionException.class)
 	ProblemDetail conflictoDeVersion(ConflictoDeVersionException e) {
 		LOG.info("Guardado rechazado por conflicto de versión sobre la ficha {}", e.id());
@@ -66,7 +51,7 @@ public class ManejadorGlobalDeErrores {
 		return problema;
 	}
 
-	/** 404: legajo o ficha inexistente. Una ficha eliminada cuenta como inexistente (FR-039c). */
+	// 404: legajo o ficha inexistente; una ficha eliminada cuenta como inexistente.
 	@ExceptionHandler(RecursoInexistenteException.class)
 	ProblemDetail inexistente(RecursoInexistenteException e) {
 		ProblemDetail problema = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
@@ -76,11 +61,10 @@ public class ManejadorGlobalDeErrores {
 		return problema;
 	}
 
-	/** 503: el padrón externo no responde (supuesto del hueco CHK040). */
+	// 503: el padrón externo no responde.
 	@ExceptionHandler(PadronNoDisponibleException.class)
 	ProblemDetail padronCaido(PadronNoDisponibleException e) {
-		// Sí se registra la causa: es una falla de infraestructura y no lleva
-		// datos de ninguna ficha.
+		// Sí se registra la causa: es una falla de infraestructura, no datos de una ficha.
 		LOG.error("El padrón de empleados no responde", e);
 
 		ProblemDetail problema = ProblemDetail.forStatus(HttpStatus.SERVICE_UNAVAILABLE);

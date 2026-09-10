@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import com.ferrovias.sismedico.fichas.CalculadorDiasPerdidos;
+import com.ferrovias.sismedico.service.CalculadorDiasPerdidos;
 
 /** FR-020, FR-020c, FR-021 y SC-006. */
 class CalculadorDiasPerdidosTest {

@@ -13,14 +13,14 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.ferrovias.sismedico.comun.Violacion;
-import com.ferrovias.sismedico.comun.Violacion.Codigos;
-import com.ferrovias.sismedico.enfermedades.CatalogoRepositorio;
-import com.ferrovias.sismedico.fichas.CalculadorDiasPerdidos;
-import com.ferrovias.sismedico.fichas.EstadoPaciente;
-import com.ferrovias.sismedico.fichas.FichaMedica;
-import com.ferrovias.sismedico.fichas.Observaciones;
-import com.ferrovias.sismedico.fichas.ValidadorFichaMedica;
+import com.ferrovias.sismedico.dtos.Violacion;
+import com.ferrovias.sismedico.dtos.Violacion.Codigos;
+import com.ferrovias.sismedico.repositories.CatalogoRepositorio;
+import com.ferrovias.sismedico.service.CalculadorDiasPerdidos;
+import com.ferrovias.sismedico.models.EstadoPaciente;
+import com.ferrovias.sismedico.models.FichaMedica;
+import com.ferrovias.sismedico.models.Observaciones;
+import com.ferrovias.sismedico.service.ValidadorFichaMedica;
 
 /**
  * Las reglas bloqueantes, una por una, sin base.

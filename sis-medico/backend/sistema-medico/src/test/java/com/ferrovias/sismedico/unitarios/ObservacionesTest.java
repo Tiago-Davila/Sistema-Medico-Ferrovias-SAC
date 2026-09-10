@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import com.ferrovias.sismedico.fichas.Observaciones;
+import com.ferrovias.sismedico.models.Observaciones;
 
 /** M3: el contenido clínico no sale por {@code toString()}. */
 class ObservacionesTest {

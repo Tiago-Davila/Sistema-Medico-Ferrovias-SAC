@@ -6,9 +6,9 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import com.ferrovias.sismedico.fichas.EstadoPaciente;
-import com.ferrovias.sismedico.fichas.FichaMedica;
-import com.ferrovias.sismedico.fichas.Observaciones;
+import com.ferrovias.sismedico.models.EstadoPaciente;
+import com.ferrovias.sismedico.models.FichaMedica;
+import com.ferrovias.sismedico.models.Observaciones;
 
 /**
  * El dominio tolera lo que el histórico trae y no cuenta lo que no debe.

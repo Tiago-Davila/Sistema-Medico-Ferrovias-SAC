@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ferrovias.sismedico.comun.Violacion;
-import com.ferrovias.sismedico.fichas.DetectorSolapamiento;
+import com.ferrovias.sismedico.dtos.Violacion;
+import com.ferrovias.sismedico.service.DetectorSolapamiento;
 
 /** FR-014, FR-014b, FR-014c, FR-014d y FR-015, contra la consulta real. */
 class DetectorSolapamientoTest extends BaseIntegracion {

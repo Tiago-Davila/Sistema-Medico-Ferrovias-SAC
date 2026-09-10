@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.ferrovias.sismedico.fichas.web.dto.FichaEntradaDTO;
-import com.ferrovias.sismedico.fichas.web.dto.RespuestaDeEscrituraDTO;
+import com.ferrovias.sismedico.dtos.FichaEntradaDTO;
+import com.ferrovias.sismedico.dtos.RespuestaDeEscrituraDTO;
 
 /** M4 y M2: lo que el contrato de entrada y salida no permite. */
 class DtoDeFichaTest {

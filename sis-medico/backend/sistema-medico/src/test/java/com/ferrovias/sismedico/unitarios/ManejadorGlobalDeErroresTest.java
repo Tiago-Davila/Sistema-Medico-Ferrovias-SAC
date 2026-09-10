@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ferrovias.sismedico.comun.ManejadorGlobalDeErrores;
-import com.ferrovias.sismedico.comun.RecursoInexistenteException;
-import com.ferrovias.sismedico.comun.Violacion;
-import com.ferrovias.sismedico.empleados.PadronNoDisponibleException;
-import com.ferrovias.sismedico.fichas.ConflictoDeVersionException;
-import com.ferrovias.sismedico.fichas.FichaInvalidaException;
+import com.ferrovias.sismedico.exceptions.RecursoInexistenteException;
+import com.ferrovias.sismedico.dtos.Violacion;
+import com.ferrovias.sismedico.exceptions.PadronNoDisponibleException;
+import com.ferrovias.sismedico.exceptions.ConflictoDeVersionException;
+import com.ferrovias.sismedico.exceptions.FichaInvalidaException;
 
 /**
  * Verifica la traducción de excepciones al formato del contrato.
