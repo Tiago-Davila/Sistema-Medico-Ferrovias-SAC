@@ -181,6 +181,32 @@ sola pantalla, no hay contrapartida medible.
   importación; si el máximo resultara chico, achicar la columna después es una
   migración trivial, mientras que recuperar texto truncado es imposible.
 
+### Medición sobre el juego de datos disponible — 2026-09-10 (T074)
+
+Medido sobre `fichas-historicas.csv`, las 670 fichas reales anonimizadas:
+
+| Métrica | Valor |
+|---|---|
+| Largo máximo | **70 caracteres** |
+| Promedio | 15,9 caracteres |
+| Fichas sin observaciones | 2 de 670 |
+| Fichas de más de 60 caracteres | 4 de 670 |
+
+**La decisión D6 no se cierra con esto, y la columna se queda en `NVARCHAR(MAX)`.**
+El volcado que tenemos cubre agosto y septiembre de 2026: es un extracto reciente,
+no el archivo de ochenta mil fichas con registros anteriores a 2016. Justamente las
+fichas viejas —cargadas cuando no había tope— son las que pueden ser largas, y de
+esas no medimos ninguna.
+
+Lo que la medición sí dice es que **el uso actual del campo está muy por debajo de
+500**: el máximo real de hoy es un séptimo del límite. Si el archivo histórico
+confirmara ese orden de magnitud, achicar la columna sería una migración trivial.
+Achicarla ahora, con el 100 % de la evidencia proveniente de dos meses recientes,
+sería apostar sobre el tramo del que no tenemos dato.
+
+**Qué falta para cerrar D6**: correr esta misma medición sobre el volcado del
+archivo completo, cuando el cliente lo provea.
+
 ## D7 — Zona horaria de "hoy"
 
 **Decisión**: propiedad de configuración explícita
@@ -268,5 +294,44 @@ servidor.
 | Tipo del legajo en el padrón | **Supuesto**: entero (FR-004f). La autoridad es la base externa. Si guardara texto con relleno, FR-004f queda mal y la columna pasa a texto. Verificar antes de codificar. |
 | ¿El padrón se importa o se consulta? | **Resuelto el 2026-09-09: se consulta en la base externa, no se importa.** Confirma FR-003b y FR-003c. No hay tabla `empleado`; D3 queda sin clave foránea. Alternativa descartada: importarlo una vez, que habría creado tabla propia y hecho posible la FK. |
 | Padrón no disponible | **Abierto** (CHK040). El plan asume degradación: no se crea ni edita, la consulta sigue andando sin apellido ni nombre. |
-| Máximo real de observaciones en el dato viejo | **Abierto**. Se mide durante la importación; no bloquea, porque D6 eligió `NVARCHAR(MAX)`. |
+| Máximo real de observaciones en el dato viejo | **Medido parcialmente el 2026-09-10** (T074): 70 caracteres sobre las 670 fichas reales disponibles, que son de 2026. Sigue **abierto** para el archivo anterior a 2016, que es el tramo que puede ser largo. No bloquea: D6 eligió `NVARCHAR(MAX)`. |
+| Cuántos legajos bloquea FR-014c | **Medido parcialmente el 2026-09-10** (T075): 0 de 421 legajos en el extracto disponible. Sigue **abierto** para el archivo completo. Ver la sección de más abajo. |
 | Herramienta de migración de esquema | **Decisión**: Flyway. La base es propia y admite DDL libre; versionar el esquema junto al código es lo que permite que los catálogos viajen como datos semilla. No estaba en la lista de stack de la constitución, que enumera el stack de aplicación, no el utillaje. |
+
+## Cuántos legajos quedan bloqueados por FR-014c — medición del 2026-09-10 (T075)
+
+Una ficha sin ninguna de las dos fechas de fin tiene período abierto hasta hoy, y
+eso bloquea **toda** carga posterior de ese legajo hasta que alguien la complete
+(FR-014c). Es la consecuencia más dura que el cliente aceptó, y hay que saber a
+cuántos empleados alcanza antes de la puesta en marcha: si son muchos, el arranque
+del sistema queda dominado por esa corrección y no por la carga normal.
+
+| Origen | Fichas sin fecha de fin | Legajos alcanzados |
+|---|---|---|
+| `fichas-historicas.csv` (670 reales, 421 legajos) | **0** | **0** |
+| `fichas-construidas.csv` (16 fabricadas, 12 legajos) | 2 | 2 (990003, 990004) |
+
+**Las dos del archivo de fichas construidas no cuentan para esta medición**: las
+fabricamos nosotros para poder probar FR-014c y el borde de período abierto de
+longitud cero. Contarlas sería medirnos a nosotros mismos.
+
+**Resultado: sobre el dato real disponible, ningún legajo queda bloqueado.** Y ese
+resultado no alcanza para tranquilizarse. El extracto cubre agosto y septiembre de
+2026, dos meses en los que el sistema de referencia ya exigía cerrar las fichas.
+Las fichas de período abierto que preocupan son las viejas, y de esas no hay
+ninguna en el volcado.
+
+**Qué falta para cerrar la medición**: correrla sobre el volcado del archivo
+completo. La consulta es directa sobre la tabla ya cargada:
+
+```sql
+SELECT COUNT(*) AS fichas, COUNT(DISTINCT legajo) AS legajos_bloqueados
+FROM ficha_medica
+WHERE fecha_citacion IS NULL AND fecha_alta IS NULL AND eliminada_en IS NULL;
+```
+
+Si el número resultara alto, la conversación con el cliente no es técnica sino de
+puesta en marcha: hay que decidir si esos legajos se corrigen antes de arrancar o
+si FR-014c se relaja para las fichas anteriores a una fecha de corte. **Esa
+decisión no se toma acá**: se registra como pregunta abierta y la responde el
+cliente.

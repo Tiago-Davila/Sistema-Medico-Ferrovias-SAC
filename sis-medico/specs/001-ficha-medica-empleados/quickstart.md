@@ -103,6 +103,20 @@ vez por sesión de trabajo, habilitar el reuso de contenedores en
 echo 'testcontainers.reuse.enable=true' >> ~/.testcontainers.properties
 ```
 
+La pantalla, con un runner propio:
+
+```bash
+cd frontend && npm test
+```
+
+Son pocos tests y a propósito. Casi toda regla de esta feature vive en el backend
+(FR-018) y se prueba donde se aplica; acá se prueba lo único que no se puede ver
+desde Java: que la confirmación de borrado se pida y se opere con el teclado sin
+ser un modal (US4-1, FR-038).
+
+La cobertura criterio por criterio está en
+[checklists/cobertura.md](checklists/cobertura.md).
+
 ## Validación de punta a punta
 
 Recorrido mínimo que demuestra que la feature anda. Cada paso apunta al criterio
@@ -159,9 +173,26 @@ Los días perdidos se recalculan solos y queda registrado quién modificó y cu�
 
 ### 8. Corregir un legajo equivocado
 
-Editar el legajo de una ficha. Pasa al empleado correcto sin eliminarse. Si el
-empleado de destino ya tiene una ficha en esa fecha, se rechaza. *(US3-10,
-US3-11)*
+**Se verifica contra la API, no desde la pantalla.** La reasignación existe en el
+backend (FR-003d, FR-003e): al cambiar el legajo, la unicidad y el solapamiento se
+evalúan contra el empleado de **destino**. La pantalla, en cambio, no expone
+ningún control para cambiarlo: manda siempre el legajo de la ficha abierta, no el
+que quedó tipeado en el buscador. Mover fichas clínicas de un empleado a otro como
+efecto colateral de tipear otro número sería demasiado fácil de hacer sin querer.
+
+```bash
+curl -X PUT localhost:8080/api/fichas/{id} \
+  -H 'Content-Type: application/json' \
+  -d '{"version": 0, "legajo": <destino>, ...}'
+```
+
+La ficha pasa al empleado correcto sin eliminarse. Si el empleado de destino ya
+tiene una ficha en esa fecha, o si los períodos se pisan, se rechaza con **422**.
+*(US3-10, US3-11; automatizado en `ReasignacionLegajoTest`)*
+
+**Queda como pregunta para el cliente**: si el operario tiene que poder corregir
+el legajo por sí mismo desde la pantalla, hace falta un control explícito, con su
+propia confirmación. No se agregó por cuenta propia.
 
 ### 9. Edición concurrente
 
@@ -182,8 +213,43 @@ modificación y la baja con observaciones centinela, captura todo el log a nivel
 `TRACE` y falla si alguna aparece. *(M3, SC-007)*
 
 ```bash
-cd backend/sistema-medico && ./gradlew test --tests '*FugaDeLogsTest'
+cd backend/sistema-medico && ./gradlew integrationTest --tests '*FugaDeLogsTest'
 ```
+
+## Las dos mediciones que faltan
+
+SC-001 y SC-005 son los únicos dos criterios de éxito sin test automatizado, y no
+por omisión: se miden con operarios frente a la pantalla y no hay forma de
+simularlos. Son las tareas T076 y T077, y **siguen pendientes**. Los resultados se
+registran acá abajo cuando se hagan.
+
+### T076 — SC-001: tiempo de carga
+
+Cronometrar a un operario entrenado cargando una ficha completa **solo con el
+teclado**, sobre al menos **10 cargas reales**, y comparar contra el tiempo que le
+lleva la misma carga en la pantalla de terminal actual. El objetivo es 60 segundos
+o menos, y no ser más lento que el sistema que se reemplaza.
+
+Qué anotar por carga: segundos de punta a punta, si tuvo que tocar el mouse, y en
+qué campo se trabó si se trabó. Lo último es lo más útil: si el orden de
+tabulación está mal, se ve ahí y en ningún otro lado.
+
+| Carga | Segundos (sistema nuevo) | Segundos (pantalla actual) | ¿Tocó el mouse? | Dónde se trabó |
+|---|---|---|---|---|
+| | | | | |
+
+### T077 — SC-005: rechazos que el operario corrige solo
+
+Ante un guardado rechazado, medir en qué porcentaje de los casos el operario
+identifica y corrige el campo señalado **sin ayuda externa**. El objetivo es 90 %.
+
+Conviene provocar los rechazos a propósito, uno por regla, y anotar cuáles se
+entienden y cuáles no. Un mensaje que nadie entiende es un mensaje mal escrito, no
+un operario mal entrenado.
+
+| Código de violación | Casos | Corregidos sin ayuda | Qué no se entendió |
+|---|---|---|---|
+| | | | |
 
 ## Si algo no anda
 

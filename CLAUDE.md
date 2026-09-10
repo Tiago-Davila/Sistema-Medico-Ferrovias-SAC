@@ -117,6 +117,18 @@ Español completo y descriptivo, en toda la pila: base, dominio, API y frontend.
 No hay una capa donde las abreviaturas viejas sean aceptables. Ese era el diseño
 anterior y ya no aplica.
 
+### Comentarios en Java
+
+Nada de bloques Javadoc (`/** ... */`) ni de `@param`/`@return`/`@throws`. Como
+mucho, una línea `//` arriba del método, en una sola oración, diciendo qué hace.
+Si el nombre del método ya lo dice, no lleva comentario.
+
+Dentro del cuerpo, una línea corta se justifica solo cuando el código hace algo
+contraintuitivo a propósito: `// Intencional: aunque parezca un bug, así lo pide
+el sistema de referencia.` Nada de citar números de requisito (`FR-xxx`,
+`SC-xxx`, `D-xxx`) en el código — esa trazabilidad vive en la spec, bajo
+`specs/`.
+
 ### Reglas heredadas del sistema de referencia
 
 Las validaciones del sistema viejo son **requisitos funcionales**, no herencia
@@ -129,12 +141,17 @@ por olvido.
 
 ### Estructura
 
+Por capa técnica, no por feature:
+
 ```
-backend/sistema-medico/src/main/java/...
-├── fichas/          dominio, servicios, controllers
-├── empleados/       consulta al padrón
-├── enfermedades/    catálogos de categoría y detalle
-└── auditoria/
+backend/sistema-medico/src/main/java/com/ferrovias/sismedico/
+├── models/          entidades y value objects del dominio
+├── controllers/     endpoints REST
+├── service/         reglas de negocio y validaciones
+├── dtos/            formas de entrada/salida de la API
+├── repositories/     acceso a datos con JdbcTemplate
+├── exceptions/      excepciones de dominio
+└── comun/           configuración transversal (seguridad, reloj, manejo de errores)
 ```
 
 No hay paquete `legacy/`, y no debe haberlo.
@@ -173,35 +190,68 @@ planteado. Parar y preguntar.
 
 ## Estado actual del repo
 
-Lo que existe hoy, para no asumir de más:
+Actualizado el 2026-09-10. Las cuatro historias de la feature 001 están
+implementadas de punta a punta.
 
-- `sis-medico/backend/sistema-medico/` — proyecto **Gradle** recién generado con
-  Spring Initializr. Sin tocar: paquete `com.sis_medico.demo`, `rootProject.name`
-  en `demo`, solo `DemoApplication`.
-- No hay frontend todavía.
-- No hay esquema de base ni migraciones todavía.
+- `sis-medico/backend/sistema-medico/` — Spring Boot sobre Gradle, paquete
+  `com.ferrovias.sismedico`, organizado por capa técnica. Acceso a datos con
+  `JdbcTemplate`, esquema por Flyway, seguridad LDAP contra AD, contrato de
+  OpenAPI por springdoc.
+- `sis-medico/frontend/` — Next.js con React, Tailwind, React Hook Form y Zod.
+  Una sola pantalla, en `app/fichas/`.
+- Esquema y catálogos en `src/main/resources/db/migration/`: `V1` la ficha médica
+  y su auditoría, `V2` los catálogos de enfermedad con su semilla.
 
-Divergencias conocidas entre `build.gradle` y el stack de la constitución, a
-resolver cuando se empiece a construir: hay `spring-boot-starter-data-jpa` en
-lugar de Spring JDBC, y faltan el driver de SQL Server, Testcontainers y OpenAPI.
+**Lo que sigue abierto, y espera al cliente**: en qué instancia vive el padrón
+(T002), el tipo real de la columna legajo (T003), el comportamiento ante padrón
+caído (T004), y las dos mediciones con operarios reales, SC-001 y SC-005 (T076 y
+T077). Están en `sis-medico/specs/001-ficha-medica-empleados/tasks.md` con el
+supuesto que se aplicó en cada caso. **Ninguna se cierra por cuenta propia.**
 
 ## Comandos
 
-Desde `sis-medico/backend/sistema-medico/`:
+Backend, desde `sis-medico/backend/sistema-medico/`:
 
 ```bash
 ./gradlew bootRun
 ```
 
+Reglas de negocio y guardarraíles de arquitectura, sin Docker, segundos:
+
 ```bash
 ./gradlew test
 ```
 
+Persistencia, solapamiento, concurrencia y lectura tolerante, con SQL Server real:
+
 ```bash
-./gradlew build
+./gradlew integrationTest
 ```
 
-El frontend todavía no existe; sus comandos se agregan cuando se cree.
+Son dos suites a propósito. La imagen de SQL Server pesa más de 2 GB, así que
+`test` no la toca y es la que se usa mientras se escribe código. Para pagar el
+arranque una sola vez por sesión:
+
+```bash
+echo 'testcontainers.reuse.enable=true' >> ~/.testcontainers.properties
+```
+
+Frontend, desde `sis-medico/frontend/`:
+
+```bash
+npm run dev
+npm test          # vitest
+npm run typecheck
+npm run lint
+```
+
+El contrato de Zod **no se escribe a mano**: sale del OpenAPI del backend. Cuando
+cambia un DTO o un endpoint, la cadena es correr `integrationTest` —que vuelca
+`frontend/lib/contrato-openapi.json`— y después:
+
+```bash
+cd sis-medico/frontend && npm run generar-contrato
+```
 
 Los tests de integración corren contra una base descartable con Testcontainers,
 nunca contra datos productivos.
