@@ -88,3 +88,15 @@ export const Empleado = z
   })
   .partial()
   .passthrough();
+export const FichaResumenDTO = z
+  .object({
+    id: z.number().int(),
+    fechaEvento: z.string(),
+    estadoPaciente: z.enum(["ACCIDENTADO", "ENFERMEDAD"]),
+    fechaCitacion: z.string(),
+    fechaAlta: z.string(),
+    diasPerdidos: z.number().int(),
+    incompleta: z.boolean(),
+  })
+  .partial()
+  .passthrough();

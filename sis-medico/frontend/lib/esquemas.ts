@@ -44,6 +44,7 @@ import {
   DetalleEnfermedad,
   Empleado,
   FichaEntradaDTO,
+  FichaResumenDTO,
   FichaSalidaDTO,
   GrupoEnfermedad,
   RespuestaDeEscrituraDTO,
@@ -54,6 +55,7 @@ export const esquemaEmpleado = Empleado;
 export const esquemaGrupoEnfermedad = GrupoEnfermedad;
 export const esquemaDetalleEnfermedad = DetalleEnfermedad;
 export const esquemaFicha = FichaSalidaDTO;
+export const esquemaResumenDeFicha = FichaResumenDTO;
 export const esquemaRespuestaDeEscritura = RespuestaDeEscrituraDTO;
 export const esquemaAdvertencia = Advertencia;
 export const esquemaFichaEntrada = FichaEntradaDTO;
@@ -62,6 +64,7 @@ export type Empleado = z.infer<typeof esquemaEmpleado>;
 export type GrupoEnfermedad = z.infer<typeof esquemaGrupoEnfermedad>;
 export type DetalleEnfermedad = z.infer<typeof esquemaDetalleEnfermedad>;
 export type Ficha = z.infer<typeof esquemaFicha>;
+export type ResumenDeFicha = z.infer<typeof esquemaResumenDeFicha>;
 export type RespuestaDeEscritura = z.infer<typeof esquemaRespuestaDeEscritura>;
 export type Advertencia = z.infer<typeof esquemaAdvertencia>;
 
@@ -132,11 +135,15 @@ export const esquemaFormularioFicha = z.object({
   // Tres estados legítimos (FR-004e): sí, no y sin definir.
   inItinere: z.boolean().nullable(),
 
-  // Los cuatro de FR-004c: obligatorios, con "no" como valor inicial.
-  estabaEnServicio: z.boolean(),
-  atendidoServicioMedico: z.boolean(),
-  envioMedicoDomicilio: z.boolean(),
-  justificado: z.boolean(),
+  // Los cuatro de FR-004c: obligatorios, con "no" como valor inicial en una ficha nueva.
+  //
+  // Una ficha histórica puede traerlos sin responder (FR-004d) y entonces el formulario los
+  // muestra vacíos: mostrarlos en "no" inventaría un dato que nadie cargó. Ahí estos mensajes
+  // son los que le piden al operario completarlos, y solo al guardar (FR-031).
+  estabaEnServicio: z.boolean({ message: "Respondé si estaba en servicio." }),
+  atendidoServicioMedico: z.boolean({ message: "Respondé si lo atendió el servicio médico." }),
+  envioMedicoDomicilio: z.boolean({ message: "Respondé si se envió médico a domicilio." }),
+  justificado: z.boolean({ message: "Respondé si está justificado." }),
 
   // Solo la hora, sin minutos (FR-004g). Opcional.
   horaAccidente: z.number().int().min(0).max(23).nullable(),
@@ -144,10 +151,30 @@ export const esquemaFormularioFicha = z.object({
   fechaCitacion: z.string().regex(FECHA).nullable(),
   fechaAlta: z.string().regex(FECHA).nullable(),
 
-  grupoEnfermedad: z.number().int({ message: "Elegí el grupo de enfermedad." }),
-  detalleEnfermedad: z.number().int({ message: "Elegí el detalle de enfermedad." }),
+  grupoEnfermedad: z.number({ message: "Elegí el grupo de enfermedad." }).int(),
+  detalleEnfermedad: z.number({ message: "Elegí el detalle de enfermedad." }).int(),
 
   observaciones: z.string().max(MAXIMO_OBSERVACIONES).nullable(),
 });
 
 export type FormularioFicha = z.infer<typeof esquemaFormularioFicha>;
+
+/**
+ * Por qué una ficha guardada quedó señalada (FR-029).
+ *
+ * Los códigos los decide el backend; acá solo se traducen a algo que el operario pueda leer. Si
+ * mañana aparece uno que no está en esta tabla, la pantalla lo muestra crudo en vez de
+ * esconderlo: una ficha marcada sin explicación es peor que una explicación fea.
+ */
+export const MOTIVOS_DE_INCONSISTENCIA: Record<string, string> = {
+  SIN_CLASIFICACION: "Sin grupo o detalle de enfermedad",
+  CODIGO_HUERFANO: "Código de enfermedad que ya no está en el catálogo",
+  SIN_FECHA_FIN: "Sin fecha de citación ni de alta",
+  DIAS_PERDIDOS_NEGATIVOS: "La fecha de alta es anterior a la del evento",
+  OBSERVACIONES_EXCEDIDAS: `Observaciones de más de ${MAXIMO_OBSERVACIONES} caracteres`,
+  CAMPO_SIN_RESPONDER: "Campos de sí/no sin responder",
+};
+
+export function explicarMotivo(codigo: string): string {
+  return MOTIVOS_DE_INCONSISTENCIA[codigo] ?? codigo;
+}

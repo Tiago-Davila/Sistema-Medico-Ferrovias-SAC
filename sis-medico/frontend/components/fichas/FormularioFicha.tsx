@@ -28,7 +28,12 @@
 import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { MAXIMO_OBSERVACIONES, type FormularioFicha, type Violacion } from "@/lib/esquemas";
+import {
+  MAXIMO_OBSERVACIONES,
+  explicarMotivo,
+  type FormularioFicha,
+  type Violacion,
+} from "@/lib/esquemas";
 
 import { SelectorCatalogo } from "./SelectorCatalogo";
 
@@ -36,6 +41,13 @@ type Props = {
   /** Violaciones del último 422, para repartirlas junto a cada control (T050). */
   violaciones: Violacion[];
   deshabilitado: boolean;
+  /**
+   * Por qué la ficha abierta quedó señalada (FR-029). Vacío en una ficha nueva.
+   *
+   * Es un aviso, no un rechazo: la ficha se abre, se recorre y se puede dejar como está. Recién
+   * al guardar el backend exige corregir lo que hoy es obligatorio (FR-031).
+   */
+  motivosInconsistencia?: string[];
 };
 
 /** Orden visual de la pantalla vieja. El 1 es el legajo, en el buscador. */
@@ -56,7 +68,11 @@ const ORDEN = {
   guardar: 15,
 } as const;
 
-export function FormularioFicha({ violaciones, deshabilitado }: Props) {
+export function FormularioFicha({
+  violaciones,
+  deshabilitado,
+  motivosInconsistencia = [],
+}: Props) {
   const { register, control, setValue, formState } = useFormContext<FormularioFicha>();
 
   const estado = useWatch({ control, name: "estadoPaciente" });
@@ -64,6 +80,13 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
   const fechaEvento = useWatch({ control, name: "fechaEvento" });
   const fechaAlta = useWatch({ control, name: "fechaAlta" });
   const observaciones = useWatch({ control, name: "observaciones" });
+
+  // Se miran para poder distinguir "no" de "sin responder" (FR-004d). Un select que no tiene
+  // opción para el valor actual muestra la primera, y ahí "sin responder" se leería como "no".
+  const estabaEnServicio = useWatch({ control, name: "estabaEnServicio" });
+  const atendidoServicioMedico = useWatch({ control, name: "atendidoServicioMedico" });
+  const envioMedicoDomicilio = useWatch({ control, name: "envioMedicoDomicilio" });
+  const justificado = useWatch({ control, name: "justificado" });
 
   const esAccidente = estado === "ACCIDENTADO";
   const esEnfermedad = estado === "ENFERMEDAD";
@@ -117,6 +140,25 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
 
   return (
     <fieldset disabled={deshabilitado} className="grid grid-cols-2 gap-x-8 gap-y-4">
+      {/* FR-029: se señala, no se bloquea. La ficha está abierta y se puede recorrer igual. */}
+      {motivosInconsistencia.length > 0 && (
+        <div
+          role="status"
+          className="col-span-2 border-l-4 border-amber-500 bg-amber-50 px-3 py-2 text-sm"
+        >
+          <strong>Esta ficha viene del sistema anterior y está incompleta.</strong>
+          <ul className="mt-1 list-disc pl-5">
+            {motivosInconsistencia.map((motivo) => (
+              <li key={motivo}>{explicarMotivo(motivo)}</li>
+            ))}
+          </ul>
+          <p className="mt-1 text-neutral-700">
+            Se puede consultar tal como está. Si la guardás, el sistema va a pedirte que completes
+            lo que hoy es obligatorio.
+          </p>
+        </div>
+      )}
+
       {/* ---------------------------------------------------- Evento */}
       <div className="flex flex-col gap-1">
         <label htmlFor="fechaEvento" className="text-sm font-medium">
@@ -142,6 +184,9 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
           className={claseCampo}
           {...register("estadoPaciente")}
         >
+          {/* Solo si la ficha importada no trae estado. En una ficha nueva no existe: FR-005
+              admite exactamente dos valores y elegir uno es obligatorio. */}
+          {!estado && <option value="">(sin definir)</option>}
           {/* FR-005: exactamente dos valores. */}
           <option value="ACCIDENTADO">Accidentado</option>
           <option value="ENFERMEDAD">Enfermedad</option>
@@ -195,32 +240,40 @@ export function FormularioFicha({ violaciones, deshabilitado }: Props) {
         id="estabaEnServicio"
         etiqueta="Estaba en servicio"
         orden={ORDEN.estabaEnServicio}
+        valor={estabaEnServicio}
+        mensaje={mensajeDe("estabaEnServicio")}
         // FR-024: lo fija in itinere y deja de ser editable.
         deshabilitado={inItinere === true}
-        registro={register("estabaEnServicio")}
+        registro={register("estabaEnServicio", { setValueAs: aSiNo })}
       />
 
       <CampoSiNo
         id="atendidoServicioMedico"
         etiqueta="Atendido por servicio médico"
         orden={ORDEN.atendidoServicioMedico}
-        registro={register("atendidoServicioMedico")}
+        valor={atendidoServicioMedico}
+        mensaje={mensajeDe("atendidoServicioMedico")}
+        registro={register("atendidoServicioMedico", { setValueAs: aSiNo })}
       />
 
       <CampoSiNo
         id="envioMedicoDomicilio"
         etiqueta="Envío de médico a domicilio"
         orden={ORDEN.envioMedicoDomicilio}
+        valor={envioMedicoDomicilio}
+        mensaje={mensajeDe("envioMedicoDomicilio")}
         // FR-023: con accidente no aplica y queda en no.
         deshabilitado={esAccidente}
-        registro={register("envioMedicoDomicilio")}
+        registro={register("envioMedicoDomicilio", { setValueAs: aSiNo })}
       />
 
       <CampoSiNo
         id="justificado"
         etiqueta="Justificado"
         orden={ORDEN.justificado}
-        registro={register("justificado")}
+        valor={justificado}
+        mensaje={mensajeDe("justificado")}
+        registro={register("justificado", { setValueAs: aSiNo })}
       />
 
       {/* -------------------------------------------------- Fechas */}
@@ -315,39 +368,66 @@ function ErrorDeCampo({ mensaje }: { mensaje?: string }) {
 }
 
 /**
+ * Lo que el select de sí/no devuelve al formulario.
+ *
+ * La cadena vacía es "sin responder" y se traduce a null, no a false. Es la diferencia que
+ * FR-004d obliga a mantener: una ficha histórica sin responder no es una ficha que respondió que
+ * no, y el validador del backend las trata distinto.
+ */
+function aSiNo(valor: unknown): boolean | null {
+  if (valor === "" || valor === null || valor === undefined) return null;
+  return valor === true || valor === "true";
+}
+
+/**
  * Un campo de sí o no de FR-004c.
  *
- * Va como par de radios y no como checkbox a propósito: un checkbox no
- * distingue "no" de "sin responder", y FR-004d exige que se distingan. Además
- * el par de radios se responde con las flechas, sin sacar las manos del
- * teclado.
+ * Va como select y no como checkbox a propósito: un checkbox no distingue "no" de "sin
+ * responder", y FR-004d exige que se distingan.
+ *
+ * La opción "(sin responder)" aparece **solo** cuando el valor actual es null, que es como llegan
+ * los campos de una ficha importada. En una ficha nueva no está: el operario elige entre sí y no,
+ * que son las dos únicas respuestas que el sistema acepta al guardar.
  */
 function CampoSiNo({
   id,
   etiqueta,
   orden,
   registro,
+  valor,
+  mensaje,
   deshabilitado = false,
 }: {
   id: string;
   etiqueta: string;
   orden: number;
   registro: ReturnType<ReturnType<typeof useFormContext<FormularioFicha>>["register"]>;
+  valor?: boolean | null;
+  mensaje?: string;
   deshabilitado?: boolean;
 }) {
+  const sinResponder = valor === null || valor === undefined;
+
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-sm font-medium">{etiqueta}</span>
+      <label htmlFor={id} className="text-sm font-medium">
+        {etiqueta}
+      </label>
       <select
         id={id}
         tabIndex={orden}
         disabled={deshabilitado}
-        className="border border-neutral-400 px-2 py-1"
+        aria-invalid={mensaje !== undefined}
+        className={`border px-2 py-1 ${
+          sinResponder ? "border-amber-600 bg-amber-50" : "border-neutral-400"
+        }`}
         {...registro}
       >
+        {sinResponder && <option value="">(sin responder)</option>}
         <option value="false">No</option>
         <option value="true">Sí</option>
       </select>
+      <ErrorDeCampo mensaje={mensaje} />
     </div>
   );
 }
