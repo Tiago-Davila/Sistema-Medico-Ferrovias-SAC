@@ -5,3 +5,20 @@
 # Gradle
 .gradle/
 build/
+
+# Entorno local y secretos
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Configuracion local de Spring. El application.yml base del proyecto queda versionado.
+**/application.properties
+**/application.yaml
+**/application-local.properties
+**/application-local.yml
+**/application-*.properties
+**/application-*.yml
+**/application-*.yaml
