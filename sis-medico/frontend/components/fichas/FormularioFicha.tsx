@@ -136,15 +136,16 @@ export function FormularioFicha({
     return violacionDe(campo)?.mensaje ?? (formState.errors[campo]?.message as string | undefined);
   }
 
-  const claseCampo = "border border-neutral-400 px-2 py-1";
+  const claseCampo =
+    "w-full rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink shadow-sm transition-colors focus:border-brand disabled:bg-slate-100 disabled:text-muted";
 
   return (
-    <fieldset disabled={deshabilitado} className="grid grid-cols-2 gap-x-8 gap-y-4">
+    <fieldset disabled={deshabilitado} className="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2">
       {/* FR-029: se señala, no se bloquea. La ficha está abierta y se puede recorrer igual. */}
       {motivosInconsistencia.length > 0 && (
         <div
           role="status"
-          className="col-span-2 border-l-4 border-amber-500 bg-amber-50 px-3 py-2 text-sm"
+          className="col-span-full rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950"
         >
           <strong>Esta ficha viene del sistema anterior y está incompleta.</strong>
           <ul className="mt-1 list-disc pl-5">
@@ -158,6 +159,8 @@ export function FormularioFicha({
           </p>
         </div>
       )}
+
+      <CabeceraDeSeccion numero="2" titulo="Datos del evento" descripcion="Información principal de la ficha." />
 
       {/* ---------------------------------------------------- Evento */}
       <div className="flex flex-col gap-1">
@@ -235,6 +238,8 @@ export function FormularioFicha({
         <ErrorDeCampo mensaje={mensajeDe("horaAccidente")} />
       </div>
 
+      <CabeceraDeSeccion numero="3" titulo="Situación y atención" descripcion="Marcá las condiciones que correspondan." />
+
       {/* ------------------------------------------------- Sí o no */}
       <CampoSiNo
         id="estabaEnServicio"
@@ -276,6 +281,8 @@ export function FormularioFicha({
         registro={register("justificado", { setValueAs: aSiNo })}
       />
 
+      <CabeceraDeSeccion numero="4" titulo="Fechas y clasificación" descripcion="Los días perdidos se calculan automáticamente." />
+
       {/* -------------------------------------------------- Fechas */}
       <div className="flex flex-col gap-1">
         <label htmlFor="fechaCitacion" className="text-sm font-medium">
@@ -309,7 +316,7 @@ export function FormularioFicha({
         <span className="text-sm font-medium">Días perdidos</span>
         {/* FR-006: nunca editable. Sin tabIndex: el foco no se detiene en un
             valor que no se puede tocar. */}
-        <output className="border border-neutral-200 bg-neutral-100 px-2 py-1 font-mono">
+        <output className="rounded-lg border border-dashed border-line bg-surface-muted px-3 py-2 font-mono text-sm text-ink">
           {diasPerdidos ?? "—"}
         </output>
       </div>
@@ -323,7 +330,7 @@ export function FormularioFicha({
       />
 
       {/* -------------------------------------------------- Texto */}
-      <div className="col-span-2 flex flex-col gap-1">
+      <div className="col-span-full flex flex-col gap-1 pt-1">
         <label htmlFor="observaciones" className="text-sm font-medium">
           Observaciones
         </label>
@@ -331,7 +338,7 @@ export function FormularioFicha({
           id="observaciones"
           rows={3}
           tabIndex={ORDEN.observaciones}
-          className={claseCampo}
+          className={`${claseCampo} min-h-28 resize-y`}
           {...register("observaciones", { setValueAs: (v) => (v === "" ? null : v) })}
         />
         {/* FR-006b: contador visible mientras se escribe. */}
@@ -339,7 +346,7 @@ export function FormularioFicha({
           className={
             largoObservaciones > MAXIMO_OBSERVACIONES
               ? "text-sm text-red-700"
-              : "text-sm text-neutral-500"
+              : "text-sm text-muted"
           }
         >
           {largoObservaciones} / {MAXIMO_OBSERVACIONES}
@@ -347,6 +354,28 @@ export function FormularioFicha({
         <ErrorDeCampo mensaje={mensajeDe("observaciones")} />
       </div>
     </fieldset>
+  );
+}
+
+function CabeceraDeSeccion({
+  numero,
+  titulo,
+  descripcion,
+}: {
+  numero: string;
+  titulo: string;
+  descripcion: string;
+}) {
+  return (
+    <div className="col-span-full mt-3 flex items-center gap-3 border-t border-line pt-5 first:mt-0 first:border-t-0 first:pt-0">
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-800 text-xs font-semibold text-white">
+        {numero}
+      </span>
+      <div>
+        <h2 className="text-sm font-semibold text-ink">{titulo}</h2>
+        <p className="text-xs text-muted">{descripcion}</p>
+      </div>
+    </div>
   );
 }
 
@@ -418,8 +447,8 @@ function CampoSiNo({
         tabIndex={orden}
         disabled={deshabilitado}
         aria-invalid={mensaje !== undefined}
-        className={`border px-2 py-1 ${
-          sinResponder ? "border-amber-600 bg-amber-50" : "border-neutral-400"
+        className={`w-full rounded-lg border px-3 py-2 text-sm shadow-sm transition-colors focus:border-brand disabled:bg-slate-100 disabled:text-muted ${
+          sinResponder ? "border-amber-500 bg-amber-50" : "border-line bg-white"
         }`}
         {...registro}
       >

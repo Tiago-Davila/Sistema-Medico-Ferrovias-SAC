@@ -309,8 +309,16 @@ export default function PantallaDeFichas() {
   return (
     <>
       <AppHeader />
-      <main className="mx-auto w-full max-w-4xl flex-1 p-6">
-        <div className="rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-6 sm:px-8 sm:py-10">
+        <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_18px_48px_rgba(37,53,76,0.09)]">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-line bg-surface-muted px-5 py-3 text-xs text-muted sm:px-7">
+            <span className="font-medium text-ink">Carga guiada</span>
+            <span>Legajo → datos del evento → clasificación</span>
+            <span className="ml-auto rounded-full bg-brand-soft px-2.5 py-1 font-medium text-brand">
+              Ctrl + Enter para guardar
+            </span>
+          </div>
+          <div className="p-5 sm:p-7">
           <BuscadorLegajo
             focoRef={campoLegajo}
             onEmpleadoConfirmado={(e) => {
@@ -347,7 +355,7 @@ export default function PantallaDeFichas() {
 
           {/* Aviso de guardado. En línea, no modal: no corta la secuencia. */}
           {avisoDeGuardado && (
-            <p role="status" className="mt-4 border-l-4 border-green-600 bg-green-50 px-3 py-2">
+            <p role="status" className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
               {avisoDeGuardado}
             </p>
           )}
@@ -356,7 +364,7 @@ export default function PantallaDeFichas() {
           {advertencias.length > 0 && (
             <ul
               role="status"
-              className="mt-2 border-l-4 border-amber-500 bg-amber-50 px-3 py-2 text-sm"
+              className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950"
             >
               {advertencias.map((a) => (
                 <li key={a.codigo}>{a.mensaje}</li>
@@ -365,7 +373,7 @@ export default function PantallaDeFichas() {
           )}
 
           {errorGeneral && (
-            <p role="alert" className="mt-4 border-l-4 border-red-600 bg-red-50 px-3 py-2">
+            <p role="alert" className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900">
               {errorGeneral}
             </p>
           )}
@@ -373,7 +381,7 @@ export default function PantallaDeFichas() {
           {violacionesSueltas.length > 0 && (
             <ul
               role="alert"
-              className="mt-4 border-l-4 border-red-600 bg-red-50 px-3 py-2 text-sm"
+              className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900"
             >
               {violacionesSueltas.map((v) => (
                 <li key={v.codigo}>{v.mensaje}</li>
@@ -383,7 +391,7 @@ export default function PantallaDeFichas() {
 
           <FormProvider {...formulario}>
             <form
-              className="mt-6"
+              className="mt-7"
               // El handler se arma dentro del callback y no durante el render: handleSubmit toca
               // refs internas de react-hook-form.
               onSubmit={(e) => void formulario.handleSubmit(guardar)(e)}
@@ -404,12 +412,12 @@ export default function PantallaDeFichas() {
                 motivosInconsistencia={enEdicion?.motivosInconsistencia}
               />
 
-              <div className="mt-6 flex flex-wrap items-center gap-4">
+              <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-line pt-5">
                 <button
                   type="submit"
                   tabIndex={15}
                   disabled={!puedeEditar || guardando}
-                  className="border border-brand bg-brand px-4 py-2 text-white transition-colors hover:bg-brand-hover disabled:opacity-40"
+                  className="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {guardando ? "Guardando…" : enEdicion ? "Guardar cambios" : "Guardar"}
                 </button>
@@ -425,13 +433,13 @@ export default function PantallaDeFichas() {
                         document.getElementById("fechaEvento")?.focus(),
                       );
                     }}
-                    className="border border-neutral-300 px-4 py-2 text-neutral-700 transition-colors hover:border-brand hover:text-brand"
+                    className="rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-brand hover:text-brand"
                   >
                     Cargar una ficha nueva
                   </button>
                 )}
 
-                <span className="text-sm text-neutral-600">
+                <span className="text-sm text-muted">
                   {enEdicion
                     ? "Ctrl+Enter para guardar los cambios."
                     : "Ctrl+Enter para guardar. Al guardar, el foco vuelve al legajo."}
@@ -439,6 +447,7 @@ export default function PantallaDeFichas() {
               </div>
             </form>
           </FormProvider>
+          </div>
         </div>
       </main>
     </>

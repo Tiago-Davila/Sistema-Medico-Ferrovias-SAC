@@ -73,7 +73,8 @@ export function SelectorCatalogo({
   const descripcionGrupo = grupos.find((g) => g.id === grupoElegido)?.descripcion;
   const descripcionDetalle = detallesVisibles.find((d) => d.id === detalleElegido)?.descripcion;
 
-  const claseCampo = "w-32 border border-neutral-400 px-2 py-1 font-mono";
+  const claseCampo =
+    "w-28 rounded-lg border border-line bg-white px-3 py-2 font-mono text-sm text-ink shadow-sm transition-colors focus:border-brand";
 
   return (
     <>
@@ -81,7 +82,7 @@ export function SelectorCatalogo({
         <label htmlFor="grupoEnfermedad" className="text-sm font-medium">
           Grupo de enfermedad
         </label>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <input
             id="grupoEnfermedad"
             // Texto y no number: el number pone flechitas que cambian el valor
@@ -105,7 +106,7 @@ export function SelectorCatalogo({
             ))}
           </datalist>
           {/* Confirmación de que el código tipeado es el que se quería. */}
-          <span className="text-sm text-neutral-700" aria-live="polite">
+          <span className="text-sm text-muted" aria-live="polite">
             {descripcionGrupo ?? (grupoElegido ? "código desconocido" : "")}
           </span>
         </div>
@@ -120,7 +121,7 @@ export function SelectorCatalogo({
         <label htmlFor="detalleEnfermedad" className="text-sm font-medium">
           Detalle de enfermedad
         </label>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <input
             id="detalleEnfermedad"
             type="text"
@@ -140,7 +141,7 @@ export function SelectorCatalogo({
               </option>
             ))}
           </datalist>
-          <span className="text-sm text-neutral-700" aria-live="polite">
+          <span className="text-sm text-muted" aria-live="polite">
             {descripcionDetalle ?? (detalleElegido ? "código desconocido" : "")}
           </span>
         </div>

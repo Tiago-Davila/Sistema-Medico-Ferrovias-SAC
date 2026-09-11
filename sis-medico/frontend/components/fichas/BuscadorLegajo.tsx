@@ -76,17 +76,26 @@ export function BuscadorLegajo({
   }
 
   return (
-    <section className="border-b border-neutral-300 pb-4">
-      <div className="flex items-end gap-3">
+    <section className="rounded-2xl border border-line bg-surface-muted p-4 sm:p-5">
+      <div className="mb-4 flex items-baseline gap-3">
+        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs font-semibold text-white">
+          1
+        </span>
+        <div>
+          <h2 className="text-sm font-semibold text-ink">Identificar empleado</h2>
+          <p className="text-xs text-muted">Ingresá el legajo para comenzar una ficha.</p>
+        </div>
+      </div>
+      <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
         <label className="flex flex-col gap-1">
-          <span className="text-sm font-medium">Legajo</span>
+          <span className="text-xs font-medium text-muted">Legajo</span>
           <input
             ref={campo}
             // Primero en el orden de tabulación: es donde arranca la carga.
             tabIndex={1}
             inputMode="numeric"
             autoComplete="off"
-            className="w-40 border border-neutral-400 px-2 py-1 font-mono text-lg"
+            className="w-40 rounded-lg border border-line bg-white px-3 py-2 font-mono text-lg font-medium text-ink shadow-sm transition-colors placeholder:text-muted focus:border-brand"
             value={texto}
             onChange={(e) => {
               setTexto(e.target.value);
@@ -115,16 +124,16 @@ export function BuscadorLegajo({
           />
         </label>
 
-        <div className="pb-1 text-lg" aria-live="polite">
-          {buscando && <span className="text-neutral-500">Buscando…</span>}
+        <div className="min-h-11 pb-1 pt-1 text-lg" aria-live="polite">
+          {buscando && <span className="text-sm text-muted">Buscando en el padrón…</span>}
 
           {empleado && (
-            <span>
+            <span className="block">
               <strong>
                 {empleado.apellido}, {empleado.nombre}
               </strong>
-              <span className="ml-3 text-sm text-neutral-600">
-                {empleado.seccion} · {empleado.categoriaLaboral}
+              <span className="mt-0.5 block text-sm font-normal text-muted sm:ml-3 sm:inline">
+                {empleado.seccion} <span aria-hidden="true">·</span> {empleado.categoriaLaboral}
               </span>
             </span>
           )}
@@ -132,7 +141,7 @@ export function BuscadorLegajo({
       </div>
 
       {error && (
-        <p id="error-legajo" role="alert" className="mt-2 text-sm text-red-700">
+        <p id="error-legajo" role="alert" className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
           {error}
         </p>
       )}

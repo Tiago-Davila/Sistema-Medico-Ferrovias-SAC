@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 101" role="img" aria-labelledby="title">
+  <title id="title">Ferrovías</title>
+  <path fill="#de0035" d="M3 76.5c6.5 4.7 14.5 7.3 31.3 8.6l1.8-8.6H3Z"/>
+  <path fill="#de0035" d="m30.9 101 1.8-8.5H0c6.4 4.6 14.4 7.2 30.9 8.5Z"/>
+  <path fill="#de0035" d="M10.8 38.3c10 7.2 20.6 9.5 67 9.6l2-9.6H10.8Z"/>
+  <path fill="#de0035" d="m74.4 64 2-9.6H7.6c10 7.2 20.8 9.5 66.8 9.6Z"/>
+  <path fill="#de0035" d="M18.6 0c12.2 7.4 28.4 9.6 88 9.6l2-9.6H18.6Z"/>
+  <path fill="#de0035" d="m103.3 25.7 2-9.6H15.4c12.3 7.4 28.1 9.6 87.9 9.6Z"/>
+</svg>

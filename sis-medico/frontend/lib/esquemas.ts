@@ -41,6 +41,8 @@ import { z } from "zod";
 
 import {
   Advertencia,
+  AuditoriaDTO,
+  CodigoConDescripcion,
   DetalleEnfermedad,
   Empleado,
   FichaEntradaDTO,
@@ -54,11 +56,49 @@ import {
 export const esquemaEmpleado = Empleado;
 export const esquemaGrupoEnfermedad = GrupoEnfermedad;
 export const esquemaDetalleEnfermedad = DetalleEnfermedad;
-export const esquemaFicha = FichaSalidaDTO;
-export const esquemaResumenDeFicha = FichaResumenDTO;
-export const esquemaRespuestaDeEscritura = RespuestaDeEscrituraDTO;
 export const esquemaAdvertencia = Advertencia;
 export const esquemaFichaEntrada = FichaEntradaDTO;
+
+const codigoConDescripcionNullable = CodigoConDescripcion.extend({
+  descripcion: z.string().nullable().optional(),
+});
+
+const auditoriaNullable = AuditoriaDTO.extend({
+  modificadaPor: z.string().nullable().optional(),
+  modificadaEn: z.string().datetime({ offset: true }).nullable().optional(),
+}).nullable();
+
+// El contrato generado no distingue bien nullable de opcional. El backend sí devuelve null en
+// fichas históricas y en fichas sin alta/citación, así que la pantalla acepta esos nulls al leer.
+export const esquemaFicha = FichaSalidaDTO.extend({
+  estadoPaciente: z.enum(["ACCIDENTADO", "ENFERMEDAD"]).nullable().optional(),
+  inItinere: z.boolean().nullable().optional(),
+  estabaEnServicio: z.boolean().nullable().optional(),
+  horaAccidente: z.number().int().nullable().optional(),
+  atendidoServicioMedico: z.boolean().nullable().optional(),
+  envioMedicoDomicilio: z.boolean().nullable().optional(),
+  justificado: z.boolean().nullable().optional(),
+  fechaCitacion: z.string().nullable().optional(),
+  fechaAlta: z.string().nullable().optional(),
+  diasPerdidos: z.number().int().nullable().optional(),
+  grupoEnfermedad: codigoConDescripcionNullable.nullable().optional(),
+  detalleEnfermedad: codigoConDescripcionNullable.nullable().optional(),
+  observaciones: z.string().nullable().optional(),
+  motivosInconsistencia: z.array(z.string()).optional(),
+  auditoria: auditoriaNullable.optional(),
+});
+
+export const esquemaResumenDeFicha = FichaResumenDTO.extend({
+  estadoPaciente: z.enum(["ACCIDENTADO", "ENFERMEDAD"]).nullable().optional(),
+  fechaCitacion: z.string().nullable().optional(),
+  fechaAlta: z.string().nullable().optional(),
+  diasPerdidos: z.number().int().nullable().optional(),
+});
+
+export const esquemaRespuestaDeEscritura = RespuestaDeEscrituraDTO.extend({
+  datos: esquemaFicha.optional(),
+  advertencias: z.array(Advertencia).optional(),
+});
 
 export type Empleado = z.infer<typeof esquemaEmpleado>;
 export type GrupoEnfermedad = z.infer<typeof esquemaGrupoEnfermedad>;
@@ -124,13 +164,17 @@ const FECHA = /^\d{4}-\d{2}-\d{2}$/;
  * conocer el número para poder mostrarlo. El backend lo aplica igual.
  */
 export const esquemaFormularioFicha = z.object({
-  legajo: z.number().int().positive(),
+  // El legajo se resuelve en el buscador, fuera del formulario visible. Exigirlo acá bloquea el
+  // submit antes de que guardar() pueda agregar el legajo confirmado del empleado.
+  legajo: z.number().int().positive().optional(),
 
   fechaEvento: z.string().regex(FECHA, "Poné la fecha del evento."),
 
-  estadoPaciente: z.enum(["ACCIDENTADO", "ENFERMEDAD"], {
-    message: "Elegí el estado del paciente.",
-  }),
+  estadoPaciente: z
+    .enum(["ACCIDENTADO", "ENFERMEDAD"], {
+      message: "Elegí el estado del paciente.",
+    })
+    .nullable(),
 
   // Tres estados legítimos (FR-004e): sí, no y sin definir.
   inItinere: z.boolean().nullable(),
@@ -140,10 +184,14 @@ export const esquemaFormularioFicha = z.object({
   // Una ficha histórica puede traerlos sin responder (FR-004d) y entonces el formulario los
   // muestra vacíos: mostrarlos en "no" inventaría un dato que nadie cargó. Ahí estos mensajes
   // son los que le piden al operario completarlos, y solo al guardar (FR-031).
-  estabaEnServicio: z.boolean({ message: "Respondé si estaba en servicio." }),
-  atendidoServicioMedico: z.boolean({ message: "Respondé si lo atendió el servicio médico." }),
-  envioMedicoDomicilio: z.boolean({ message: "Respondé si se envió médico a domicilio." }),
-  justificado: z.boolean({ message: "Respondé si está justificado." }),
+  estabaEnServicio: z.boolean({ message: "Respondé si estaba en servicio." }).nullable(),
+  atendidoServicioMedico: z
+    .boolean({ message: "Respondé si lo atendió el servicio médico." })
+    .nullable(),
+  envioMedicoDomicilio: z
+    .boolean({ message: "Respondé si se envió médico a domicilio." })
+    .nullable(),
+  justificado: z.boolean({ message: "Respondé si está justificado." }).nullable(),
 
   // Solo la hora, sin minutos (FR-004g). Opcional.
   horaAccidente: z.number().int().min(0).max(23).nullable(),

@@ -107,8 +107,8 @@ export function ListaFichas({
 
   if (cargando) {
     return (
-      <p role="status" className="mt-4 text-sm text-neutral-600">
-        Buscando fichas…
+      <p role="status" className="mt-5 text-sm text-muted">
+        Buscando fichas cargadas…
       </p>
     );
   }
@@ -117,17 +117,17 @@ export function ListaFichas({
   // cargando" o como "algo falló", y el operario no sabe si puede cargar la ficha nueva.
   if (fichas.length === 0) {
     return (
-      <p role="status" className="mt-4 border-l-4 border-neutral-400 bg-neutral-50 px-3 py-2 text-sm">
+      <p role="status" className="mt-5 rounded-lg border border-dashed border-line bg-surface-muted px-4 py-3 text-sm text-muted">
         Este empleado no tiene ninguna ficha cargada.
       </p>
     );
   }
 
   return (
-    <section className="mt-4">
-      <h2 className="text-sm font-medium">
-        Fichas cargadas ({fichas.length})
-        <span className="ml-3 font-normal text-neutral-600">
+    <section className="mt-5 rounded-xl border border-line bg-surface-muted p-4 sm:p-5">
+      <h2 className="text-sm font-semibold text-ink">
+        Fichas cargadas <span className="text-muted">({fichas.length})</span>
+        <span className="ml-3 font-normal text-muted">
           Flechas para recorrer, Enter para abrir.
         </span>
       </h2>
@@ -137,7 +137,7 @@ export function ListaFichas({
         aria-label="Fichas del empleado"
         tabIndex={-1}
         onKeyDown={alTeclear}
-        className="mt-2 divide-y divide-neutral-200 border border-neutral-300"
+        className="mt-3 divide-y divide-line overflow-hidden rounded-lg border border-line bg-white"
       >
         {fichas.map((ficha, indice) => {
           if (aConfirmar === ficha.id) {
@@ -168,8 +168,10 @@ export function ListaFichas({
               tabIndex={indice === enfocada ? orden : -1}
               onFocus={() => setEnfocada(indice)}
               onClick={() => ficha.id !== undefined && onAbrir(ficha.id)}
-              className={`flex flex-wrap items-center gap-x-4 gap-y-1 px-3 py-2 text-sm ${
-                ficha.id === abiertaId ? "bg-neutral-800 text-white" : "hover:bg-neutral-100"
+              className={`flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3 text-sm transition-colors ${
+                ficha.id === abiertaId
+                  ? "bg-slate-800 text-white"
+                  : "text-ink hover:bg-brand-soft"
               }`}
             >
               <span className="w-24 font-mono">{comoFecha(ficha.fechaEvento)}</span>
@@ -199,7 +201,7 @@ export function ListaFichas({
                   className={`border px-1 text-xs ${
                     ficha.id === abiertaId
                       ? "border-amber-300 text-amber-200"
-                      : "border-amber-600 bg-amber-50 text-amber-800"
+                      : "border-amber-500 bg-amber-50 text-amber-800"
                   }`}
                 >
                   incompleta
@@ -216,7 +218,7 @@ export function ListaFichas({
                   setAConfirmar(ficha.id ?? null);
                 }}
                 className={`ml-auto border px-2 py-0.5 text-xs ${
-                  ficha.id === abiertaId ? "border-neutral-400" : "border-neutral-400"
+                  ficha.id === abiertaId ? "border-slate-400" : "border-line hover:border-brand hover:text-brand"
                 }`}
               >
                 Eliminar

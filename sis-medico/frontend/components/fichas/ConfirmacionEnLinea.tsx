@@ -41,7 +41,7 @@ export function ConfirmacionEnLinea({ mensaje, onConfirmar, onCancelar, trabajan
     <div
       role="alertdialog"
       aria-label="Confirmar eliminación"
-      className="flex flex-wrap items-center gap-3 border-l-4 border-red-600 bg-red-50 px-3 py-2"
+      className="flex flex-wrap items-center gap-3 bg-red-50 px-4 py-3"
       onKeyDown={(e) => {
         if (e.key === "Escape") {
           e.preventDefault();
@@ -57,7 +57,7 @@ export function ConfirmacionEnLinea({ mensaje, onConfirmar, onCancelar, trabajan
         type="button"
         disabled={trabajando}
         onClick={onConfirmar}
-        className="border border-red-700 bg-red-700 px-3 py-1 text-sm text-white disabled:opacity-40"
+        className="rounded-lg bg-red-700 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-800 disabled:opacity-40"
       >
         {trabajando ? "Eliminando…" : "Eliminar"}
       </button>
@@ -66,12 +66,12 @@ export function ConfirmacionEnLinea({ mensaje, onConfirmar, onCancelar, trabajan
         type="button"
         disabled={trabajando}
         onClick={onCancelar}
-        className="border border-neutral-400 px-3 py-1 text-sm"
+        className="rounded-lg border border-line bg-white px-3 py-1.5 text-sm font-medium text-ink"
       >
         Cancelar
       </button>
 
-      <span className="text-xs text-neutral-600">Escape cancela.</span>
+      <span className="text-xs text-muted">Escape cancela.</span>
     </div>
   );
 }
