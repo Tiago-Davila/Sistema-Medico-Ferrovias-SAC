@@ -40,6 +40,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { AppHeader } from "@/components/AppHeader";
 import { BuscadorLegajo } from "@/components/fichas/BuscadorLegajo";
 import { FormularioFicha } from "@/components/fichas/FormularioFicha";
 import { ListaFichas } from "@/components/fichas/ListaFichas";
@@ -306,132 +307,140 @@ export default function PantallaDeFichas() {
   const puedeEditar = enEdicion !== null || empleado !== null;
 
   return (
-    <main className="mx-auto max-w-4xl p-6">
-      <h1 className="mb-4 text-xl font-semibold">Ficha médica</h1>
-
-      <BuscadorLegajo
-        focoRef={campoLegajo}
-        onEmpleadoConfirmado={(e) => {
-          setEmpleado(e);
-          volverAFichaNueva();
-          setAvisoDeGuardado(null);
-          setErrorGeneral(null);
-          void refrescarFichas(e.legajo);
-          // FR-040: al resolver el legajo el foco salta SOLO a fecha del evento. A ningún otro
-          // lado: es el campo que sigue en la carga.
-          requestAnimationFrame(() => {
-            document.getElementById("fechaEvento")?.focus();
-          });
-        }}
-        onEmpleadoDescartado={() => {
-          setEmpleado(null);
-          setFichas([]);
-          volverAFichaNueva();
-        }}
-      />
-
-      {empleado && (
-        <ListaFichas
-          fichas={fichas}
-          cargando={cargandoFichas}
-          abiertaId={enEdicion?.id ?? null}
-          onAbrir={(id) => void abrir(id)}
-          onEliminar={(ficha) => void eliminar(ficha)}
-          eliminando={eliminando}
-          // Después del botón de guardar: consultar y cargar son dos tareas distintas (FR-040).
-          orden={16}
-        />
-      )}
-
-      {/* Aviso de guardado. En línea, no modal: no corta la secuencia. */}
-      {avisoDeGuardado && (
-        <p role="status" className="mt-4 border-l-4 border-green-600 bg-green-50 px-3 py-2">
-          {avisoDeGuardado}
-        </p>
-      )}
-
-      {/* FR-019: la advertencia no bloquea. El guardado ya ocurrió. */}
-      {advertencias.length > 0 && (
-        <ul
-          role="status"
-          className="mt-2 border-l-4 border-amber-500 bg-amber-50 px-3 py-2 text-sm"
-        >
-          {advertencias.map((a) => (
-            <li key={a.codigo}>{a.mensaje}</li>
-          ))}
-        </ul>
-      )}
-
-      {errorGeneral && (
-        <p role="alert" className="mt-4 border-l-4 border-red-600 bg-red-50 px-3 py-2">
-          {errorGeneral}
-        </p>
-      )}
-
-      {violacionesSueltas.length > 0 && (
-        <ul role="alert" className="mt-4 border-l-4 border-red-600 bg-red-50 px-3 py-2 text-sm">
-          {violacionesSueltas.map((v) => (
-            <li key={v.codigo}>{v.mensaje}</li>
-          ))}
-        </ul>
-      )}
-
-      <FormProvider {...formulario}>
-        <form
-          className="mt-6"
-          // El handler se arma dentro del callback y no durante el render: handleSubmit toca refs
-          // internas de react-hook-form.
-          onSubmit={(e) => void formulario.handleSubmit(guardar)(e)}
-          // Enter en un campo suelto no guarda: en esta pantalla Enter avanza. Guardar es
-          // Ctrl+Enter o el botón.
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !(e.ctrlKey || e.metaKey)) {
-              const destino = e.target as HTMLElement;
-              if (destino.tagName !== "TEXTAREA") {
-                e.preventDefault();
-              }
-            }
-          }}
-        >
-          <FormularioFicha
-            violaciones={violaciones}
-            deshabilitado={!puedeEditar || guardando}
-            motivosInconsistencia={enEdicion?.motivosInconsistencia}
+    <>
+      <AppHeader />
+      <main className="mx-auto w-full max-w-4xl flex-1 p-6">
+        <div className="rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
+          <BuscadorLegajo
+            focoRef={campoLegajo}
+            onEmpleadoConfirmado={(e) => {
+              setEmpleado(e);
+              volverAFichaNueva();
+              setAvisoDeGuardado(null);
+              setErrorGeneral(null);
+              void refrescarFichas(e.legajo);
+              // FR-040: al resolver el legajo el foco salta SOLO a fecha del evento. A ningún
+              // otro lado: es el campo que sigue en la carga.
+              requestAnimationFrame(() => {
+                document.getElementById("fechaEvento")?.focus();
+              });
+            }}
+            onEmpleadoDescartado={() => {
+              setEmpleado(null);
+              setFichas([]);
+              volverAFichaNueva();
+            }}
           />
 
-          <div className="mt-6 flex flex-wrap items-center gap-4">
-            <button
-              type="submit"
-              tabIndex={15}
-              disabled={!puedeEditar || guardando}
-              className="border border-neutral-800 bg-neutral-800 px-4 py-2 text-white disabled:opacity-40"
+          {empleado && (
+            <ListaFichas
+              fichas={fichas}
+              cargando={cargandoFichas}
+              abiertaId={enEdicion?.id ?? null}
+              onAbrir={(id) => void abrir(id)}
+              onEliminar={(ficha) => void eliminar(ficha)}
+              eliminando={eliminando}
+              // Después del botón de guardar: consultar y cargar son dos tareas distintas (FR-040).
+              orden={16}
+            />
+          )}
+
+          {/* Aviso de guardado. En línea, no modal: no corta la secuencia. */}
+          {avisoDeGuardado && (
+            <p role="status" className="mt-4 border-l-4 border-green-600 bg-green-50 px-3 py-2">
+              {avisoDeGuardado}
+            </p>
+          )}
+
+          {/* FR-019: la advertencia no bloquea. El guardado ya ocurrió. */}
+          {advertencias.length > 0 && (
+            <ul
+              role="status"
+              className="mt-2 border-l-4 border-amber-500 bg-amber-50 px-3 py-2 text-sm"
             >
-              {guardando ? "Guardando…" : enEdicion ? "Guardar cambios" : "Guardar"}
-            </button>
+              {advertencias.map((a) => (
+                <li key={a.codigo}>{a.mensaje}</li>
+              ))}
+            </ul>
+          )}
 
-            {enEdicion && (
-              <button
-                type="button"
-                tabIndex={17}
-                onClick={() => {
-                  volverAFichaNueva();
-                  setAvisoDeGuardado(null);
-                  requestAnimationFrame(() => document.getElementById("fechaEvento")?.focus());
-                }}
-                className="border border-neutral-400 px-4 py-2"
-              >
-                Cargar una ficha nueva
-              </button>
-            )}
+          {errorGeneral && (
+            <p role="alert" className="mt-4 border-l-4 border-red-600 bg-red-50 px-3 py-2">
+              {errorGeneral}
+            </p>
+          )}
 
-            <span className="text-sm text-neutral-600">
-              {enEdicion
-                ? "Ctrl+Enter para guardar los cambios."
-                : "Ctrl+Enter para guardar. Al guardar, el foco vuelve al legajo."}
-            </span>
-          </div>
-        </form>
-      </FormProvider>
-    </main>
+          {violacionesSueltas.length > 0 && (
+            <ul
+              role="alert"
+              className="mt-4 border-l-4 border-red-600 bg-red-50 px-3 py-2 text-sm"
+            >
+              {violacionesSueltas.map((v) => (
+                <li key={v.codigo}>{v.mensaje}</li>
+              ))}
+            </ul>
+          )}
+
+          <FormProvider {...formulario}>
+            <form
+              className="mt-6"
+              // El handler se arma dentro del callback y no durante el render: handleSubmit toca
+              // refs internas de react-hook-form.
+              onSubmit={(e) => void formulario.handleSubmit(guardar)(e)}
+              // Enter en un campo suelto no guarda: en esta pantalla Enter avanza. Guardar es
+              // Ctrl+Enter o el botón.
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !(e.ctrlKey || e.metaKey)) {
+                  const destino = e.target as HTMLElement;
+                  if (destino.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                  }
+                }
+              }}
+            >
+              <FormularioFicha
+                violaciones={violaciones}
+                deshabilitado={!puedeEditar || guardando}
+                motivosInconsistencia={enEdicion?.motivosInconsistencia}
+              />
+
+              <div className="mt-6 flex flex-wrap items-center gap-4">
+                <button
+                  type="submit"
+                  tabIndex={15}
+                  disabled={!puedeEditar || guardando}
+                  className="border border-brand bg-brand px-4 py-2 text-white transition-colors hover:bg-brand-hover disabled:opacity-40"
+                >
+                  {guardando ? "Guardando…" : enEdicion ? "Guardar cambios" : "Guardar"}
+                </button>
+
+                {enEdicion && (
+                  <button
+                    type="button"
+                    tabIndex={17}
+                    onClick={() => {
+                      volverAFichaNueva();
+                      setAvisoDeGuardado(null);
+                      requestAnimationFrame(() =>
+                        document.getElementById("fechaEvento")?.focus(),
+                      );
+                    }}
+                    className="border border-neutral-300 px-4 py-2 text-neutral-700 transition-colors hover:border-brand hover:text-brand"
+                  >
+                    Cargar una ficha nueva
+                  </button>
+                )}
+
+                <span className="text-sm text-neutral-600">
+                  {enEdicion
+                    ? "Ctrl+Enter para guardar los cambios."
+                    : "Ctrl+Enter para guardar. Al guardar, el foco vuelve al legajo."}
+                </span>
+              </div>
+            </form>
+          </FormProvider>
+        </div>
+      </main>
+    </>
   );
 }
